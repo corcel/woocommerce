@@ -89,7 +89,7 @@ class Product extends Post
                 $attribute_name = substr($taxonomy_name, 3);
                 $attribute      = $attributes->get($attribute_name);
 
-                $attribute->setAttribute('terms', $taxonomy->pluck('term')->toArray());
+                $attribute->setAttribute('terms', $taxonomy->pluck('term'));
 
                 return $attribute;
             })
