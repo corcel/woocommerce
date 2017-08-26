@@ -45,7 +45,7 @@ class Product extends Post
         'downloadable',
         'stock',
         'in_stock',
-        'product_type',
+        'type',
     ];
 
     /**
@@ -59,6 +59,7 @@ class Product extends Post
     protected $with = [
         'meta',
         'thumbnail',
+        'product_type',
     ];
 
     /**
@@ -169,11 +170,9 @@ class Product extends Post
     /**
      * @return string
      */
-    public function getProductTypeAttribute()
+    public function getTypeAttribute()
     {
-        $types = Arr::get($this->terms, 'product_type', []);
-
-        return Arr::first($types, null, 'simple');
+        return $this->product_type->pluck('term.name')->first();
     }
 
     /**
@@ -208,6 +207,17 @@ class Product extends Post
     public function isTaxable()
     {
         return 'taxable' === $this->tax_status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function product_type()
+    {
+        return $this->belongsToMany(
+            Product\Type::class,
+            'term_relationships', 'object_id', 'term_taxonomy_id'
+        );
     }
 
     /**
