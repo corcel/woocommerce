@@ -1,0 +1,25 @@
+{
+  "name": "corcel/woocommerce",
+  "description": "WooCommerce plugin for Corcel",
+  "homepage": "http://github.com/corcel/woocommerce",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Krzysztof Grabania",
+      "email": "krzysztof@grabania.pl",
+      "homepage": "http://grabania.pl"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.9",
+    "jgrossi/corcel": "~2.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "Corcel\\WooCommerce\\": "src/"
+    }
+  }
+}
