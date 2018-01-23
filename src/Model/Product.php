@@ -4,7 +4,7 @@ namespace Corcel\WooCommerce\Model;
 
 use Corcel\Model\Attachment;
 use Corcel\Model\Post;
-use Corcel\Traits\AliasesTrait;
+use Corcel\Concerns\Aliases as AliasesTrait;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 

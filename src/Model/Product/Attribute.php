@@ -3,7 +3,7 @@
 namespace Corcel\WooCommerce\Model\Product;
 
 use Corcel\Model;
-use Corcel\Traits\AliasesTrait;
+use Corcel\Concerns\Aliases as AliasesTrait;
 
 class Attribute extends Model
 {
