@@ -4,13 +4,13 @@ namespace Corcel\WooCommerce\Model;
 
 use Corcel\Model\Attachment;
 use Corcel\Model\Post;
-use Corcel\Traits\AliasesTrait;
+use Corcel\Concerns\Aliases;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
 class Product extends Post
 {
-    use AliasesTrait;
+    use Aliases;
 
     /**
      * @var array
