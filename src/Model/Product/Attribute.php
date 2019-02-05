@@ -3,11 +3,11 @@
 namespace Corcel\WooCommerce\Model\Product;
 
 use Corcel\Model;
-use Corcel\Traits\AliasesTrait;
+use Corcel\Concerns\Aliases;
 
 class Attribute extends Model
 {
-    use AliasesTrait;
+    use Aliases;
 
     /**
      * @var array
