@@ -1,19 +1,31 @@
 <?php
+declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Model;
 
+use Corcel\Concerns\Aliases;
 use Corcel\Model\Attachment;
 use Corcel\Model\Post;
-use Corcel\Concerns\Aliases;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as BaseCollection;
 
+/**
+ * @property \Illuminate\Database\Eloquent\Collection  $taxonomies
+ * @property \Illuminate\Database\Eloquent\Collection  $product_type
+ * @property \Corcel\Model\Collection\MetaCollection   $meta
+ * @property \Corcel\Model\Meta\ThumbnailMeta          $thumbnail
+ * @property string|null                               $regular_price
+ * @property string|null                               $sale_price
+ * @property string|null                               $tax_status
+ */
 class Product extends Post
 {
     use Aliases;
 
     /**
-     * @var array
+     * The aliases of model.
+     *
+     * @var  string[][]
      */
     protected static $aliases = [
         'price'         => ['meta' => '_price'],
@@ -29,7 +41,9 @@ class Product extends Post
     ];
 
     /**
-     * @var array
+     * @inheritDoc
+     *
+     * @var  string[]
      */
     protected $appends = [
         'price',
@@ -49,12 +63,16 @@ class Product extends Post
     ];
 
     /**
-     * @var string
+     * The post type of model.
+     *
+     * @var  string
      */
     protected $postType = 'product';
 
     /**
-     * @var array
+     * @intheritDoc
+     *
+     * @var  string[]
      */
     protected $with = [
         'meta',
@@ -63,22 +81,26 @@ class Product extends Post
     ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * The related categories.
+     *
+     * @return  \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function categories()
     {
         return $this->belongsToMany(
-            Product\Category::class,
-            'term_relationships', 'object_id', 'term_taxonomy_id'
+            ProductCategory::class,
+            'term_relationships',
+            'object_id',
+            'term_taxonomy_id'
         );
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection<mixed>
      */
-    public function getAttributesAttribute()
+    public function getAttributesAttribute(): BaseCollection
     {
-        $attributes = Product\Attribute::all()->keyBy('attribute_name');
+        $attributes = ProductAttribute::all()->keyBy('attribute_name');
 
         return $this->taxonomies
             ->filter(function ($taxonomy) {
@@ -87,7 +109,7 @@ class Product extends Post
             ->groupBy('taxonomy')
             ->map(function ($taxonomy, $taxonomy_name) use ($attributes) {
                 $attribute_name = substr($taxonomy_name, 3);
-                $attribute      = $attributes->get($attribute_name);
+                $attribute = $attributes->get($attribute_name);
 
                 $attribute->setAttribute('terms', $taxonomy->pluck('term'));
 
@@ -97,9 +119,9 @@ class Product extends Post
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Eloquent\Collection<mixed>
      */
-    public function getCrosssellsAttribute()
+    public function getCrosssellsAttribute(): Collection
     {
         $ids = $this->meta->_crosssell_ids;
 
@@ -109,9 +131,9 @@ class Product extends Post
 
         $ids = unserialize($ids);
 
-        return static::whereIn('ID', $ids)
-            ->get()
-            ->toBase();
+        return static::query()
+            ->whereIn('ID', $ids)
+            ->get();
     }
 
     /**
@@ -123,9 +145,9 @@ class Product extends Post
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Eloquent\Collection<mixed>
      */
-    public function getGalleryAttribute()
+    public function getGalleryAttribute(): Collection
     {
         $gallery = new Collection([
             $this->thumbnail->attachment,
@@ -138,7 +160,7 @@ class Product extends Post
         }
 
         $attachment_ids = explode(',', $attachment_ids);
-        $attachments    = Attachment::whereIn('ID', $attachment_ids)->get();
+        $attachments    = Attachment::query()->whereIn('ID', $attachment_ids)->get();
 
         return $gallery->merge($attachments);
     }
@@ -176,9 +198,9 @@ class Product extends Post
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return \Illuminate\Database\Eloquent\Collection<mixed>
      */
-    public function getUpsellsAttribute()
+    public function getUpsellsAttribute(): Collection
     {
         $ids = $this->meta->_upsell_ids;
 
@@ -188,9 +210,9 @@ class Product extends Post
 
         $ids = unserialize($ids);
 
-        return static::whereIn('ID', $ids)
-            ->get()
-            ->toBase();
+        return static::query()
+            ->whereIn('ID', $ids)
+            ->get();
     }
 
     /**
@@ -215,8 +237,10 @@ class Product extends Post
     public function product_type()
     {
         return $this->belongsToMany(
-            Product\Type::class,
-            'term_relationships', 'object_id', 'term_taxonomy_id'
+            ProductType::class,
+            'term_relationships',
+            'object_id',
+            'term_taxonomy_id'
         );
     }
 
@@ -226,8 +250,10 @@ class Product extends Post
     public function tags()
     {
         return $this->belongsToMany(
-            Product\Tag::class,
-            'term_relationships', 'object_id', 'term_taxonomy_id'
+            ProductTag::class,
+            'term_relationships',
+            'object_id',
+            'term_taxonomy_id'
         );
     }
 }

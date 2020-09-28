@@ -1,16 +1,19 @@
 <?php
+declare(strict_types=1);
 
-namespace Corcel\WooCommerce\Model\Product;
+namespace Corcel\WooCommerce\Model;
 
-use Corcel\Model;
 use Corcel\Concerns\Aliases;
+use Corcel\Model;
 
-class Attribute extends Model
+class ProductAttribute extends Model
 {
     use Aliases;
 
     /**
-     * @var array
+     * The model aliases.
+     *
+     * @var  string[]
      */
     protected static $aliases = [
         'id'       => 'attribute_id',
@@ -22,19 +25,21 @@ class Attribute extends Model
     ];
 
     /**
-     * @var array
+     * @inheritDoc
+     *
+     * @var  string[]
      */
     protected $casts = [
         'attribute_public' => 'bool',
     ];
 
     /**
-     * @var string
+     * @inheritDoc
      */
     protected $primaryKey = 'attribute_id';
 
     /**
-     * @var string
+     * @inheritDoc
      */
     protected $table = 'woocommerce_attribute_taxonomies';
 }

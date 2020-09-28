@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Corcel\WooCommerce;
 
@@ -7,13 +8,20 @@ use Corcel\Model\Option;
 class WooCommerce
 {
     /**
-     * @var mixed
+     * The shop currency.
+     *
+     * @var  string|null
      */
     private static $currency;
 
-    public static function currency()
+    /**
+     * Get the shop currency.
+     *
+     * @return  string
+     */
+    public static function currency(): string
     {
-        if (is_null(self::$currency)) {
+        if (self::$currency === null) {
             self::$currency = Option::get('woocommerce_currency');
         }
 

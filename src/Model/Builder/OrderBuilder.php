@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Model\Builder;
 
@@ -7,65 +8,81 @@ use Corcel\Model\Builder\PostBuilder;
 class OrderBuilder extends PostBuilder
 {
     /**
-     * @return $this
+     * Scope a query to only cancelled orders.
+     *
+     * @return  \Corcel\Model\Builder\PostBuilder
      */
-    public function cancelled()
+    public function cancelled(): PostBuilder
     {
         return $this->status('cancelled');
     }
 
     /**
-     * @return $this
+     * Scope a query to only completed orders.
+     *
+     * @return  \Corcel\Model\Builder\PostBuilder
      */
-    public function completed()
+    public function completed(): PostBuilder
     {
         return $this->status('completed');
     }
 
     /**
-     * @return $this
+     * Scope a query to only failed orders.
+     *
+     * @return  \Corcel\Model\Builder\PostBuilder
      */
-    public function failed()
+    public function failed(): PostBuilder
     {
         return $this->status('failed');
     }
 
     /**
-     * @return $this
+     * Scope a query to only on hold orders.
+     *
+     * @return  \Corcel\Model\Builder\PostBuilder
      */
-    public function onHold()
+    public function onHold(): PostBuilder
     {
         return $this->status('on-hold');
     }
 
     /**
-     * @return $this
+     * Scope a query to only pending orders.
+     *
+     * @return  \Corcel\Model\Builder\PostBuilder
      */
-    public function pending()
+    public function pending(): PostBuilder
     {
         return $this->status('pending');
     }
 
     /**
-     * @return $this
+     * Scope a query to only processing orders.
+     *
+     * @return  \Corcel\Model\Builder\PostBuilder
      */
-    public function processing()
+    public function processing(): PostBuilder
     {
         return $this->status('processing');
     }
 
     /**
-     * @return $this
+     * Scope a query to only refunded orders.
+     *
+     * @return  \Corcel\Model\Builder\PostBuilder
      */
-    public function refunded()
+    public function refunded(): PostBuilder
     {
         return $this->status('refunded');
     }
 
     /**
-     * @param $this
+     * Scope a query to orders with given status.
+     *
+     * @return  \Corcel\Model\Builder\PostBuilder
      */
-    public function status($status)
+    public function status($status): PostBuilder
     {
         $status = 'wc-' === substr($status, 0, 3) ? substr($status, 3) : $status;
 

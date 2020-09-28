@@ -1,13 +1,19 @@
 <?php
+declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Model;
 
 use Corcel\Model;
 
+/**
+ * @property \Corcel\Model\Collection\MetaCollection   $meta
+ */
 class Item extends Model
 {
     /**
-     * @var array
+     * @inheritDoc
+     *
+     * @var  string[]
      */
     protected $appends = [
         'product_id',
@@ -21,12 +27,14 @@ class Item extends Model
     ];
 
     /**
-     * @var string
+     * @inheritDoc
      */
     protected $table = 'woocommerce_order_items';
 
     /**
-     * @var array
+     * @inheritDoc
+     *
+     * @var  string[]
      */
     protected $with = [
         'product',

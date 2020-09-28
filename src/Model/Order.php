@@ -1,19 +1,35 @@
 <?php
+declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Model;
 
 use Carbon\Carbon;
+use Corcel\Concerns\MetaFields;
 use Corcel\Model\Post;
-use Corcel\WooCommerce\Classes\Payment;
-use Corcel\WooCommerce\Builder\OrderBuilder;
+use Corcel\WooCommerce\Model\Builder\OrderBuilder;
+use Corcel\WooCommerce\Support\Payment;
 use Corcel\WooCommerce\Traits\AddressesTrait;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property \Corcel\WooCommerce\Model\Customer        $customer
+ * @property \Carbon\Carbon|null                       $date_completed
+ * @property \Carbon\Carbon|null                       $date_paid
+ * @property \Illuminate\Database\Eloquent\Collection  $items
+ * @property \Corcel\Model\Collection\MetaCollection   $meta
+ * @property string                                    $post_status
+ * @property string                                    $status
+ */
 class Order extends Post
 {
     use AddressesTrait;
+    use MetaFields;
 
     /**
-     * @var array
+     * The model aliases.
+     *
+     * @var  string[][]
      */
     protected static $aliases = [
         'currency'    => ['meta' => '_order_currency'],
@@ -21,7 +37,9 @@ class Order extends Post
     ];
 
     /**
-     * @var array
+     * @inheritDoc
+     *
+     * @var  string[]
      */
     protected $appends = [
         'status',
@@ -35,27 +53,36 @@ class Order extends Post
     ];
 
     /**
-     * @var string
+     * The post type slug.
+     *
+     * @var  string
      */
     protected $postType = 'shop_order';
 
     /**
-     * @var array
+     * @inheritDoc
+     *
+     * @var  string[]
      */
-    protected $with = ['items', 'customer'];
+    protected $with = [
+        'items',
+        'customer',
+    ];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @inheritDoc
      */
-    public function customer()
+    public function newEloquentBuilder($builder): OrderBuilder
     {
-        return $this->belongsTo(Customer::class);
+        return new OrderBuilder($builder);
     }
 
     /**
-     * @return Carbon\Carbon|null
+     * Get the completed date attribute.
+     *
+     * @return \Carbon\Carbon|null
      */
-    public function getDateCompletedAttribute()
+    protected function getDateCompletedAttribute(): ?Carbon
     {
         $value = $this->meta->_date_completed;
 
@@ -63,9 +90,11 @@ class Order extends Post
     }
 
     /**
-     * @return Carbon\Carbon|null
+     * Get the paid date attribute.
+     *
+     * @return \Carbon\Carbon|null
      */
-    public function getDatePaidAttribute()
+    public function getDatePaidAttribute(): ?Carbon
     {
         $value = $this->meta->_date_paid;
 
@@ -73,17 +102,21 @@ class Order extends Post
     }
 
     /**
-     * @return Corcel\WooCommerce\Classes\Payment
+     * Get the payment attribute.
+     *
+     * @return \Corcel\WooCommerce\Support\Payment
      */
-    public function getPaymentAttribute()
+    public function getPaymentAttribute(): Payment
     {
         return new Payment($this->meta);
     }
 
     /**
-     * @return string
+     * Get status attribute.
+     *
+     * @return  string
      */
-    public function getStatusAttribute()
+    public function getStatusAttribute(): string
     {
         $status = $this->post_status;
 
@@ -91,29 +124,35 @@ class Order extends Post
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * Set status attribute.
+     *
+     * @param  string  $status
+     * @return void
      */
-    public function items()
-    {
-        return $this->hasMany(Item::class, 'order_id');
-    }
-
-    /**
-     * @param  $query
-     * @return mixed
-     */
-    public function newEloquentBuilder($query)
-    {
-        return new OrderBuilder($query);
-    }
-
-    /**
-     * @param $status
-     */
-    public function setStatusAttribute($status)
+    public function setStatusAttribute(string $status): void
     {
         $new_status = 'wc-' === substr($status, 0, 3) ? $status : 'wc-' . $status;
 
         $this->attributes['post_status'] = $status;
+    }
+
+    /**
+     * Get the related customer.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function customer(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    /**
+     * Get related items.
+     *
+     * @return  \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function items(): HasMany
+    {
+        return $this->hasMany(Item::class, 'order_id');
     }
 }
