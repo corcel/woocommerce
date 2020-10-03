@@ -23,11 +23,3 @@ jobs:
         REQUIRE_DEV: true
       with:
         args: analyse
-
-  phpunit:
-    name: PHPUnit
-    runs-on: ubuntu-lastest
-    steps:
-      - uses: actions/checkout@v2
-      - name: PHPUnit (php-actions)
-        uses: php-actions/phpunit@v9
