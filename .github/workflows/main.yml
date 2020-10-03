@@ -18,6 +18,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: PHPStan
-      uses: docker://oskarstark/phpstan-ga
+      uses: docker://oskarstark/phpstan-ga   
+      env:
+        REQUIRE_DEV: true
       with:
         args: analyse
