@@ -3,22 +3,51 @@ declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Model;
 
+use Corcel\Concerns\Aliases;
+use Corcel\Concerns\MetaFields;
 use Corcel\Model;
+use Corcel\WooCommerce\Model\Meta\ItemMeta;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property \Corcel\Model\Collection\MetaCollection   $meta
+ * @property int                                $order_item_id
+ * @property string                             $order_item_name
+ * @property string                             $order_item_type
+ * @property int                                $order_id
+ * @property string|null                        $product_id
+ * @property string|null                        $variation_id
+ * @property string|null                        $quantity
+ * @property string|null                        $tax_class
+ * @property string|null                        $line_subtotal
+ * @property string|null                        $line_subtotal_tax
+ * @property string|null                        $line_total
+ * @property string|null                        $line_tax
+ * @property \Corcel\WooCommerce\Model\Order    $order
+ * @property \Corcel\WooCommerce\Model\Product  $product
  */
 class Item extends Model
 {
+    use Aliases;
+    use MetaFields;
+
+    /**
+     * The model aliases.
+     *
+     * @var  string[][]
+     */
+    protected static $aliases = [
+        'product_id'   => ['meta' => '_product_id'],
+        'variation_id' => ['meta' => '_variation_id'],
+    ];
+
     /**
      * @inheritDoc
      *
      * @var  string[]
      */
     protected $appends = [
-        'product_id',
         'quantity',
-        'variation_id',
         'tax_class',
         'line_subtotal',
         'line_subtotal_tax',
@@ -28,102 +57,97 @@ class Item extends Model
 
     /**
      * @inheritDoc
+     *
+     * @var  string
      */
     protected $table = 'woocommerce_order_items';
 
     /**
+     * Get the line subtotal attribute.
+     *
+     * @return  string|null
+     */
+    protected function getLineSubtotalAttribute()
+    {
+        return $this->getMeta('_line_subtotal');
+    }
+
+    /**
+     * Get the line subtotal tax attribute.
+     *
+     * @return  string|null
+     */
+    protected function getLineSubtotalTaxAttribute()
+    {
+        return $this->getMeta('_line_subtotal_tax');
+    }
+
+    /**
+     * Get the line tax attribute.
+     *
+     * @return  string|null
+     */
+    protected function getLineTaxAttribute()
+    {
+        return $this->getMeta('_line_tax');
+    }
+
+    /**
+     * Get the line total attribute.
+     *
+     * @return  string|null
+     */
+    protected function getLineTotalAttribute()
+    {
+        return $this->getMeta('_line_total');
+    }
+
+    /**
+     * Get the quantity attribute.
+     *
+     * @return  string|null
+     */
+    protected function getQuantityAttribute()
+    {
+        return $this->getMeta('_qty');
+    }
+
+    /**
+     * Get the tax class attribute.
+     *
+     * @return  string|null
+     */
+    protected function getTaxClassAttribute()
+    {
+        return $this->getMeta('_tax_class');
+    }
+
+    /**
      * @inheritDoc
      *
-     * @var  string[]
+     * @return  \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    protected $with = [
-        'product',
-    ];
-
-    /**
-     * @return mixed
-     */
-    public function getLineSubtotalAttribute()
+    public function meta(): HasMany
     {
-        return $this->meta->_line_subtotal;
+        return $this->hasMany(ItemMeta::class, 'order_item_id', 'order_item_id');
     }
 
     /**
-     * @return mixed
+     * Get the related order.
+     *
+     * @return  \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function getLineSubtotalTaxAttribute()
-    {
-        return $this->meta->_line_subtotal_tax;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLineTaxAttribute()
-    {
-        return $this->meta->_line_tax;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLineTotalAttribute()
-    {
-        return $this->meta->_line_total;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProductIdAttribute()
-    {
-        return $this->meta->_product_id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getQuantityAttribute()
-    {
-        return $this->meta->_qty;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTaxClassAttribute()
-    {
-        return $this->meta->_tax_class;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getVariationIdAttribute()
-    {
-        return $this->meta->_variation_id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function meta()
-    {
-        return $this->hasMany(Meta\ItemMeta::class, 'order_item_id', 'order_item_id');
-    }
-
-    /**
-     * @return mixed
-     */
-    public function order()
+    public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
     }
 
     /**
-     * @return mixed
+     * Get the related product.
+     *
+     * @return  \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function product()
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }

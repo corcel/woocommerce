@@ -5,10 +5,26 @@ namespace Corcel\WooCommerce\Model;
 
 use Corcel\Concerns\Aliases;
 use Corcel\Model;
+use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * @property string|null  $id
+ * @property string|null  $slug
+ * @property string|null  $name
+ * @property string|null  $type
+ * @property string|null  $order_by
+ * @property bool|null    $public
+ */
 class ProductAttribute extends Model
 {
     use Aliases;
+
+    /**
+     * The terms collection.
+     *
+     * @var  \Illuminate\Database\Eloquent\Collection<mixed>
+     */
+    public $terms;
 
     /**
      * The model aliases.
@@ -42,4 +58,14 @@ class ProductAttribute extends Model
      * @inheritDoc
      */
     protected $table = 'woocommerce_attribute_taxonomies';
+
+    /**
+     * Set the product terms.
+     *
+     * @param  \Illuminate\Database\Eloquent\Collection<mixed>  $terms
+     */
+    public function setTerms(Collection $terms): void
+    {
+        $this->terms = $terms;
+    }
 }

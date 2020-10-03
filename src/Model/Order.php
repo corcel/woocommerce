@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Corcel\WooCommerce\Model;
 
 use Carbon\Carbon;
+use Corcel\Concerns\Aliases;
 use Corcel\Concerns\MetaFields;
 use Corcel\Model\Post;
 use Corcel\WooCommerce\Model\Builder\OrderBuilder;
@@ -13,16 +14,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property \Corcel\WooCommerce\Model\Customer        $customer
+ * @property int|null                                  $customer_id
+ * @property string|null                               $currency
+ * @property string|null                               $total
+ * @property string|null                               $tax
+ * @property string|null                               $shipping_tax
  * @property \Carbon\Carbon|null                       $date_completed
  * @property \Carbon\Carbon|null                       $date_paid
+ * @property \Corcel\WooCommerce\Model\Customer|null   $customer
  * @property \Illuminate\Database\Eloquent\Collection  $items
- * @property \Corcel\Model\Collection\MetaCollection   $meta
- * @property string                                    $post_status
- * @property string                                    $status
  */
 class Order extends Post
 {
+    use Aliases;
     use AddressesTrait;
     use MetaFields;
 
@@ -32,7 +36,6 @@ class Order extends Post
      * @var  string[][]
      */
     protected static $aliases = [
-        'currency'    => ['meta' => '_order_currency'],
         'customer_id' => ['meta' => '_customer_user'],
     ];
 
@@ -42,14 +45,15 @@ class Order extends Post
      * @var  string[]
      */
     protected $appends = [
-        'status',
-        'billing',
+        'currency',
+        'total',
         'shipping',
-        'payment',
-        'customer',
+        'tax',
+        'shipping_tax',
+        'status',
         'date_completed',
         'date_paid',
-        'currency',
+        'payment',
     ];
 
     /**
@@ -61,20 +65,72 @@ class Order extends Post
 
     /**
      * @inheritDoc
-     *
-     * @var  string[]
-     */
-    protected $with = [
-        'items',
-        'customer',
-    ];
-
-    /**
-     * @inheritDoc
      */
     public function newEloquentBuilder($builder): OrderBuilder
     {
         return new OrderBuilder($builder);
+    }
+
+    /**
+     * Get the currency attribute.
+     *
+     * @return  string|null
+     */
+    protected function getCurrencyAttribute(): ?string
+    {
+        return $this->getMeta('_order_currency');
+    }
+
+    /**
+     * Get the total attribute.
+     *
+     * @return  string|null
+     */
+    protected function getTotalAttribute(): ?string
+    {
+        return $this->getMeta('_order_total');
+    }
+
+    /**
+     * Get the shipping attribute.
+     *
+     * @return  string|null
+     */
+    protected function getShippingAttribute(): ?string
+    {
+        return $this->getMeta('_order_shipping');
+    }
+
+    /**
+     * Get the tax attribute.
+     *
+     * @return  string|null
+     */
+    protected function getTaxAttribute(): ?string
+    {
+        return $this->getMeta('_order_tax');
+    }
+
+    /**
+     * Get the shipping tax attribute.
+     *
+     * @return  string|null
+     */
+    protected function getShippingTaxAttribute(): ?string
+    {
+        return $this->getMeta('_order_shipping_tax');
+    }
+
+    /**
+     * Get the status attribute.
+     *
+     * @return  string
+     */
+    public function getStatusAttribute(): string
+    {
+        $status = $this->post_status; // @phpstan-ignore-line
+
+        return 'wc-' === substr($status, 0, 3) ? substr($status, 3) : $status;
     }
 
     /**
@@ -84,9 +140,9 @@ class Order extends Post
      */
     protected function getDateCompletedAttribute(): ?Carbon
     {
-        $value = $this->meta->_date_completed;
+        $value = $this->getMeta('_date_completed');
 
-        return !empty($value) ? Carbon::parse($value) : null;
+        return $value ? Carbon::parse($value) : null;
     }
 
     /**
@@ -96,9 +152,9 @@ class Order extends Post
      */
     public function getDatePaidAttribute(): ?Carbon
     {
-        $value = $this->meta->_date_paid;
+        $value = $this->getMeta('_date_paid');
 
-        return !empty($value) ? Carbon::parse($value) : null;
+        return $value ? Carbon::parse($value) : null;
     }
 
     /**
@@ -108,32 +164,7 @@ class Order extends Post
      */
     public function getPaymentAttribute(): Payment
     {
-        return new Payment($this->meta);
-    }
-
-    /**
-     * Get status attribute.
-     *
-     * @return  string
-     */
-    public function getStatusAttribute(): string
-    {
-        $status = $this->post_status;
-
-        return 'wc-' === substr($status, 0, 3) ? substr($status, 3) : $status;
-    }
-
-    /**
-     * Set status attribute.
-     *
-     * @param  string  $status
-     * @return void
-     */
-    public function setStatusAttribute(string $status): void
-    {
-        $new_status = 'wc-' === substr($status, 0, 3) ? $status : 'wc-' . $status;
-
-        $this->attributes['post_status'] = $status;
+        return new Payment($this);
     }
 
     /**

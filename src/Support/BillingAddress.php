@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Corcel\WooCommerce\Support;
 
 use Corcel\Model;
-use Corcel\Model\Collection\MetaCollection;
 
 /**
  * @property string|null  $first_name
@@ -23,9 +22,11 @@ class BillingAddress extends Address
 {
     /**
      * @inheritDoc
+     *
+     * @param \Corcel\Model $model
      */
-    public function __construct(Model $model, MetaCollection $meta)
+    public function __construct(Model $model)
     {
-        parent::__construct($model, $meta, 'billing');
+        parent::__construct($model, 'billing');
     }
 }

@@ -4,7 +4,3 @@ parameters:
         - src
 
     level: 8
-
-    ignoreErrors:
-        - '#Access to an undefined property Corcel\\Model\\Collection\\MetaCollection(.*?)::\$(.+).#'
-        - '#Access to an undefined property Corcel\\Model\\Meta\\(.+?)::\$(.+).#'

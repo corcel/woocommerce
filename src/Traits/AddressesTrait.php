@@ -13,13 +13,26 @@ use Corcel\WooCommerce\Support\ShippingAddress;
 trait AddressesTrait
 {
     /**
+     * Initialize trait.
+     *
+     * @return  void
+     */
+    protected function initializeAddressesTrait(): void
+    {
+        $this->appends = array_merge($this->appends, [
+            'billing_address',
+            'shipping_address',
+        ]);
+    }
+
+    /**
      * Get the billing address attribute.
      *
      * @return  \Corcel\WooCommerce\Support\BillingAddress
      */
-    public function getBillingAddressAttribute(): BillingAddress
+    protected function getBillingAddressAttribute(): BillingAddress
     {
-        return new BillingAddress($this, $this->meta);
+        return new BillingAddress($this);
     }
 
     /**
@@ -27,8 +40,8 @@ trait AddressesTrait
      *
      * @return  \Corcel\WooCommerce\Support\ShippingAddress
      */
-    public function getShippingAddressAttribute(): ShippingAddress
+    protected function getShippingAddressAttribute(): ShippingAddress
     {
-        return new ShippingAddress($this, $this->meta);
+        return new ShippingAddress($this);
     }
 }

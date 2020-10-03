@@ -8,7 +8,9 @@ use Corcel\Model\Meta\PostMeta;
 class ItemMeta extends PostMeta
 {
     /**
-     * @var string
+     * @inheritDoc
+     *
+     * @var  string
      */
     protected $table = 'woocommerce_order_itemmeta';
 }

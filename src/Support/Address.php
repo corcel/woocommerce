@@ -4,12 +4,13 @@ declare(strict_types=1);
 namespace Corcel\WooCommerce\Support;
 
 use Corcel\Model;
-use Corcel\Model\Collection\MetaCollection;
 use Corcel\WooCommerce\Model\Customer;
 use Corcel\WooCommerce\Model\Order;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
 use InvalidArgumentException;
 
-class Address
+class Address implements Arrayable, Jsonable
 {
     /**
      * The model instance.
@@ -17,13 +18,6 @@ class Address
      * @var  \Corcel\Model
      */
     protected $model;
-
-    /**
-     * The model meta colection.
-     *
-     * @var  \Corcel\Model\Collection\MetaCollection<string>
-     */
-    protected $meta;
 
     /**
      * The address type.
@@ -35,37 +29,41 @@ class Address
     /**
      * The address attributes.
      *
-     * @var  string[]
+     * @var  mixed[]
      */
     protected $attributes = [];
 
     /**
      * The address constructor.
      *
-     * @param  \Corcel\Model                                    $model
-     * @param  \Corcel\Model\Collection\MetaCollection<string>  $meta
-     * @param  string                                           $type
+     * @param  \Corcel\Model  $model
+     * @param  string         $type
      */
-    public function __construct(Model $model, MetaCollection $meta, string $type)
+    public function __construct(Model $model, string $type)
     {
         $this->model = $model;
-        $this->meta  = $meta;
         $this->type  = $type;
 
         $this->parseAttributes();
     }
 
+    /**
+     * Parse address attributes.
+     *
+     * @return  void
+     */
     protected function parseAttributes(): void
     {
         foreach ($this->attributeKeys() as $key) {
             $metaKey = $this->getMetaKey($key);
 
-            $this->attributes[$key] = $this->meta->{$metaKey};
+            // @phpstan-ignore-next-line
+            $this->attributes[$key] = $this->model->getMeta($metaKey);
         }
     }
 
     /**
-     * The the attribute keys.
+     * List of the attribute keys.
      *
      * @return  string[]
      */
@@ -93,6 +91,12 @@ class Address
         return $keys;
     }
 
+    /**
+     * Get meta key for given attribute name.
+     *
+     * @param   string  $key
+     * @return  string
+     */
     protected function getMetaKey(string $key): string
     {
         $pattern = $this->metaKeyPattern();
@@ -100,6 +104,11 @@ class Address
         return sprintf($pattern, $this->type, $key);
     }
 
+    /**
+     * Get meta key pattern based on model.
+     *
+     * @return  string
+     */
     protected function metaKeyPattern(): string
     {
         $class = get_class($this->model);
@@ -113,7 +122,40 @@ class Address
         return '';
     }
 
-    public function __get(string $key): string
+    /**
+     * @inheritDoc
+     *
+     * @return  mixed[]
+     */
+    public function toArray(): array
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @param   int     $options
+     * @return  string
+     */
+    public function toJson($options = 0): string
+    {
+        $json = json_encode($this->toArray(), $options);
+
+        if ($json === false || JSON_ERROR_NONE !== json_last_error()) {
+            throw new InvalidArgumentException('An error occured while converting order address to JSON.');
+        }
+
+        return $json;
+    }
+
+    /**
+     * Magic method to get address attributes.
+     *
+     * @param   string  $key
+     * @return  mixed
+     */
+    public function __get(string $key)
     {
         if (array_key_exists($key, $this->attributes)) {
             return $this->attributes[$key];

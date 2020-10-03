@@ -3,9 +3,12 @@ declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Support;
 
-use Corcel\Model\Collection\MetaCollection;
+use Corcel\WooCommerce\Model\Order;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+use InvalidArgumentException;
 
-class Payment
+class Payment implements Arrayable, Jsonable
 {
     /**
      * The payment method.
@@ -31,12 +34,43 @@ class Payment
     /**
      * The payment constructor.
      *
-     * @param  \Corcel\Model\Collection\MetaCollection<string>  $meta
+     * @param  \Corcel\WooCommerce\Model\Order  $order
      */
-    public function __construct(MetaCollection $meta)
+    public function __construct(Order $order)
     {
-        $this->method         = $meta->_payment_method;
-        $this->method_title   = $meta->_payment_method_title;
-        $this->transaction_id = $meta->_transaction_id;
+        $this->method         = $order->getMeta('_payment_method');
+        $this->method_title   = $order->getMeta('_payment_method_title');
+        $this->transaction_id = $order->getMeta('_transaction_id');
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @return  mixed[]
+     */
+    public function toArray(): array
+    {
+        return [
+            'method'         => $this->method,
+            'method_title'   => $this->method_title,
+            'transaction_id' => $this->transaction_id,
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @param   int     $options
+     * @return  string
+     */
+    public function toJson($options = 0): string
+    {
+        $json = json_encode($this->toArray(), $options);
+
+        if ($json === false || JSON_ERROR_NONE !== json_last_error()) {
+            throw new InvalidArgumentException('An error occured while converting order payment to JSON.');
+        }
+
+        return $json;
     }
 }
