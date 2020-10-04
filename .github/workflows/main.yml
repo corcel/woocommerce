@@ -13,13 +13,17 @@ on:
 
 jobs:
   phpstan:
-    name: PHPStan
+    name: PHPStan + PHPUnit
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
     - name: PHPStan
       uses: docker://oskarstark/phpstan-ga   
       env:
         REQUIRE_DEV: true
       with:
         args: analyse
+
+    - name: PHPUnit (php-actions)
+      uses: php-actions/phpunit@v9

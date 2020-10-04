@@ -18,11 +18,18 @@
         "nesbot/carbon": "^2.0"
     },
     "require-dev": {
-        "phpstan/phpstan": "^0.12.46"
+        "orchestra/testbench": "^5.0",
+        "phpstan/phpstan": "^0.12.46",
+        "phpunit/phpunit": "^9.4"
     },
     "autoload": {
         "psr-4": {
             "Corcel\\WooCommerce\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
         }
     }
 }

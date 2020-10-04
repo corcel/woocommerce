@@ -14,6 +14,12 @@ use Illuminate\Database\Eloquent\Collection;
  * @property string|null  $type
  * @property string|null  $order_by
  * @property bool|null    $public
+ * @property string|null  $attribute_id
+ * @property string|null  $attribute_name
+ * @property string|null  $attribute_label
+ * @property string|null  $attribute_type
+ * @property string|null  $attribute_order_by
+ * @property bool|null    $attribute_public
  */
 class ProductAttribute extends Model
 {
