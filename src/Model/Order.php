@@ -17,10 +17,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property int|null                                  $customer_id
  * @property string|null                               $currency
  * @property string|null                               $total
+ * @property string|null                               $shipping
  * @property string|null                               $tax
  * @property string|null                               $shipping_tax
+ * @property string                                    $status
  * @property \Carbon\Carbon|null                       $date_completed
  * @property \Carbon\Carbon|null                       $date_paid
+ * @property \Corcel\WooCommerce\Support\Payment       $payment
  * @property \Corcel\WooCommerce\Model\Customer|null   $customer
  * @property \Illuminate\Database\Eloquent\Collection  $items
  */

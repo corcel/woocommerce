@@ -2,5 +2,11 @@ parameters:
 
     paths:
         - src
+        - tests
 
     level: 8
+
+    ignoreErrors:
+        -
+            message: '#Variable \$factory might not be defined.#'
+            path: tests/*

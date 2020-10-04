@@ -119,7 +119,10 @@ class Address implements Arrayable, Jsonable
             return '_%s_%s';
         }
 
-        return '';
+        throw new InvalidArgumentException(sprintf(
+            'Model "%s" cannot have address.',
+            $class
+        ));
     }
 
     /**

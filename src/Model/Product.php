@@ -32,7 +32,7 @@ use Illuminate\Support\Str;
  * @property bool                                      $in_stock
  * @property string|null                               $type
  * @property \Illuminate\Support\Collection            $attributes
- * @property \Illuminate\Database\Eloquent\Collection  $crosssels
+ * @property \Illuminate\Database\Eloquent\Collection  $crosssells
  * @property \Illuminate\Database\Eloquent\Collection  $upsells
  * @property \Illuminate\Support\Collection            $gallery
  * @property \Illuminate\Database\Eloquent\Collection  $categories
@@ -275,12 +275,11 @@ class Product extends Post
     protected function getCrosssellsAttribute(): Collection
     {
         $crosssells = $this->getMeta('_crosssell_ids');
+        $crosssells = unserialize($crosssells);
 
         if (empty($crosssells)) {
             return new Collection();
         }
-
-        $crosssells = unserialize($crosssells);
 
         return static::query()->whereIn('ID', $crosssells)->get();
     }
@@ -293,12 +292,11 @@ class Product extends Post
     public function getUpsellsAttribute(): Collection
     {
         $upsells = $this->getMeta('_upsell_ids');
+        $upsells = unserialize($upsells);
 
         if (empty($upsells)) {
             return new Collection();
         }
-
-        $upsells = unserialize($upsells);
 
         return static::query()->whereIn('ID', $upsells)->get();
     }

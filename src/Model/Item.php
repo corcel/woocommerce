@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
+ * @property int                                $id
+ * @property string                             $name
+ * @property string                             $type
  * @property int                                $order_item_id
  * @property string                             $order_item_name
  * @property string                             $order_item_type
@@ -34,9 +37,12 @@ class Item extends Model
     /**
      * The model aliases.
      *
-     * @var  string[][]
+     * @var  string[][]|string[]
      */
     protected static $aliases = [
+        'id'           => 'order_item_id',
+        'name'         => 'order_item_name',
+        'type'         => 'order_item_type',
         'product_id'   => ['meta' => '_product_id'],
         'variation_id' => ['meta' => '_variation_id'],
     ];
@@ -61,6 +67,20 @@ class Item extends Model
      * @var  string
      */
     protected $table = 'woocommerce_order_items';
+
+    /**
+     * @inheritDoc
+     *
+     * @var  string
+     */
+    protected $primaryKey = 'order_item_id';
+
+    /**
+     * @inheritDoc
+     *
+     * @var  bool
+     */
+    public $timestamps = false;
 
     /**
      * Get the line subtotal attribute.
