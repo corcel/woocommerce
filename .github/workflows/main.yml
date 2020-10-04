@@ -13,9 +13,20 @@ on:
 
 jobs:
   run:
-    name: Analyse and test code
 
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version:
+          - "7.2"
+          - "7.3"
+          - "7.4"
+        operating-system:
+          - ubuntu-latest
+          - windows-latest
+
+    runs-on: ${{ matrix.operating-system }}
+
+    name: Analyse and test code (PHP ${{ matrix.php-version }}, ${{ matrix.operating-system }})
 
     steps:
 
@@ -25,7 +36,7 @@ jobs:
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: 7.4
+        php-version: "${{ matrix.php-version }}"
         extensions: sqlite
 
     - name: Get composer cache directory
@@ -36,14 +47,19 @@ jobs:
       uses: actions/cache@v2
       with:
         path: ${{ steps.composercache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-        restore-keys: ${{ runner.os }}-composer-
+        key: php-${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
+        restore-keys: php-${{ matrix.php-version }}-composer-
 
     - name: Install dependencies
-      run: composer install --prefer-dist
+      run: composer update --no-interaction --no-progress --no-suggest
 
     - name: PHPStan
       run: vendor/bin/phpstan analyse
 
-    - name: PHPUnit
+    - name: PHPUnit (PHP >= 7.3)
+      if: contains( [ "7.3", "7.4", "8.0" ], ${{ matrix.php-version }} )
       run: vendor/bin/phpunit
+
+    - name: PHPUnit (PHP <= 7.2)
+      if: contains( [ "7.2" ], ${{ matrix.php-version }} )
+      run: vendor/bin/phpunit --configuration phpunit-72.xml

@@ -56,7 +56,7 @@ trait HasRelationsThroughMeta
             throw new LogicException(sprintf(
                 'The model "%s" must have defined "meta" method. Adding "%s" trait will likely solve this problem.',
                 get_class($model),
-                MetaFields::class,
+                MetaFields::class
             ));
         }
 
