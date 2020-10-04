@@ -57,9 +57,9 @@ jobs:
       run: vendor/bin/phpstan analyse
 
     - name: PHPUnit (PHP >= 7.3)
-      if: contains( [ "7.3", "7.4", "8.0" ], matrix.php-version )
+      if: matrix.php-version >= 7.3
       run: vendor/bin/phpunit
 
     - name: PHPUnit (PHP <= 7.2)
-      if: contains( [ "7.2" ], matrix.php-version )
+      if: matrix.php-version <= 7.2
       run: vendor/bin/phpunit --configuration phpunit-72.xml
