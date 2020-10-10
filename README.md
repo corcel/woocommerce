@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/corcel/woocommerce/master/.github/logo.jpg" alt="Corcel WooCommerce logo" height="300px" />
+  <img src="https://raw.githubusercontent.com/corcel/woocommerce/master/.github/logo.jpg" alt="Corcel WooCommerce logo" />
 </p>
 
 **A collection of Laravel models for WooCommerce.**
