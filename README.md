@@ -1,4 +1,3 @@
-# WooCommerce Corcel Plugin
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/corcel/woocommerce/master/.github/logo.jpg" alt="Corcel WooCommerce logo" height="300px" />
@@ -22,6 +21,15 @@ Some meta values are collected into helper classes:
 * [BillingAddress](#billingaddress-helper) - helper for customer and order billing address
 * [ShippingAddress](#shippingaddress-helper) - helper for customer and order shipping address
 * [Payment](#payment-helper) - helper for order payment
+
+## Compatibility list
+
+| Corcel WooCommerce | Laravel        | PHP version |
+| ------------------ | -------------- | ----------- |
+| 1.x                | 6.x, 7.x       | >= 7.2      |
+| 2.x                | 6.x, 7.x, 8.x  | >= 7.3      |
+
+Currently PHP 8.0 is not supported.
 
 ## Models list
 
