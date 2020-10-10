@@ -233,6 +233,6 @@ $order   = Order::find(1);
 $payment = $order->payment;
 
 $payment->method;
-$payment->method_method;
+$payment->method_title;
 $payment->transaction_id;
 ```
