@@ -17,7 +17,6 @@ jobs:
     strategy:
       matrix:
         php-version:
-          - "7.2"
           - "7.3"
           - "7.4"
         operating-system:
@@ -56,10 +55,5 @@ jobs:
     - name: PHPStan
       run: vendor/bin/phpstan analyse
 
-    - name: PHPUnit (PHP >= 7.3)
-      if: matrix.php-version >= 7.3
+    - name: PHPUnit
       run: vendor/bin/phpunit
-
-    - name: PHPUnit (PHP <= 7.2)
-      if: matrix.php-version <= 7.2
-      run: vendor/bin/phpunit --configuration phpunit-72.xml
