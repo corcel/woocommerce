@@ -1,5 +1,9 @@
 # WooCommerce Corcel Plugin changelog
 
+## v2.0.1 - 2020-10-29
+
+* Fix invalid typehint in ProductAttribute model (#17)
+
 ## v2.0.0 - 2020-10-10
 
 * Add support for Corcel 5.x and Laravel 8.x
