@@ -5,7 +5,7 @@ namespace Corcel\WooCommerce\Model;
 
 use Corcel\Concerns\Aliases;
 use Corcel\Model;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 /**
  * @property string|null  $id
@@ -28,7 +28,7 @@ class ProductAttribute extends Model
     /**
      * The terms collection.
      *
-     * @var  \Illuminate\Database\Eloquent\Collection<mixed>
+     * @var  \Illuminate\Support\Collection<mixed>
      */
     public $terms;
 
@@ -68,7 +68,7 @@ class ProductAttribute extends Model
     /**
      * Set the product terms.
      *
-     * @param  \Illuminate\Database\Eloquent\Collection<mixed>  $terms
+     * @param  \Illuminate\Support\Collection<mixed>  $terms
      */
     public function setTerms(Collection $terms): void
     {
