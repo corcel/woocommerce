@@ -145,7 +145,23 @@ class Order extends Post
     {
         $value = $this->getMeta('_date_completed');
 
-        return $value ? Carbon::parse($value) : null;
+        if ($value !== null) {
+            return Carbon::createFromTimestamp($value);
+        }
+
+        /**
+         * WooCommerce in version 2.6.x has stored completed date in
+         * "_completed_date" meta field in MySQL datetime format.
+         */
+        $value = $this->getMeta('_completed_date');
+
+        if ($value !== null) {
+            $datetime = Carbon::createFromFormat('Y-m-d H:i:s', $value);
+
+            return $datetime !== false ? $datetime : null;
+        }
+
+        return null;
     }
 
     /**
@@ -157,7 +173,23 @@ class Order extends Post
     {
         $value = $this->getMeta('_date_paid');
 
-        return $value ? Carbon::parse($value) : null;
+        if ($value !== null) {
+            return Carbon::createFromTimestamp($value);
+        }
+
+        /**
+         * WooCommerce in version 2.6.x has stored paid date in "_paid_date"
+         * meta field in MySQL datetime format.
+         */
+        $value = $this->getMeta('_paid_date');
+
+        if ($value !== null) {
+            $datetime = Carbon::createFromFormat('Y-m-d H:i:s', $value);
+
+            return $datetime !== false ? $datetime : null;
+        }
+
+        return null;
     }
 
     /**
