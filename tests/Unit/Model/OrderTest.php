@@ -66,7 +66,7 @@ class OrderTest extends TestCase
     public function testDateCompletedProperty(): void
     {
         $order = $this->createOrder();
-        $order->createMeta('_date_completed', '2020-01-01 00:00:00');
+        $order->createMeta('_date_completed', 1577836800); // '2020-01-01 00:00:00'
 
         $this->assertInstanceOf(Carbon::class, $order->date_completed);
         $this->assertSame('2020-01-01 00:00:00', $order->date_completed->format('Y-m-d H:i:s')); // @phpstan-ignore-line
@@ -75,7 +75,20 @@ class OrderTest extends TestCase
     public function testDatePaidProperty(): void
     {
         $order = $this->createOrder();
-        $order->createMeta('_date_paid', '2020-01-01 01:00:00');
+        $order->createMeta('_date_paid', 1577840400); // '2020-01-01 01:00:00'
+
+        $this->assertInstanceOf(Carbon::class, $order->date_paid);
+        $this->assertSame('2020-01-01 01:00:00', $order->date_paid->format('Y-m-d H:i:s')); // @phpstan-ignore-line
+    }
+
+    public function testDeprecatedDateFormats(): void
+    {
+        $order = $this->createOrder();
+        $order->createMeta('_completed_date', '2020-01-01 00:00:00');
+        $order->createMeta('_paid_date', '2020-01-01 01:00:00');
+
+        $this->assertInstanceOf(Carbon::class, $order->date_completed);
+        $this->assertSame('2020-01-01 00:00:00', $order->date_completed->format('Y-m-d H:i:s')); // @phpstan-ignore-line
 
         $this->assertInstanceOf(Carbon::class, $order->date_paid);
         $this->assertSame('2020-01-01 01:00:00', $order->date_paid->format('Y-m-d H:i:s')); // @phpstan-ignore-line
