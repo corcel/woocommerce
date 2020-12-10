@@ -1,5 +1,9 @@
 # WooCommerce Corcel Plugin changelog
 
+## v1.0.4 - 2020-12-10
+
+* Fix: allow address to work with subclasses (#20)
+
 ## v1.0.3 - 2020-10-30
 
 * Fix error with parsing order completed and paid date from timestamp (#19)
