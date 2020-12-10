@@ -111,17 +111,15 @@ class Address implements Arrayable, Jsonable
      */
     protected function metaKeyPattern(): string
     {
-        $class = get_class($this->model);
-
-        if ($class === Customer::class) {
+        if ($this->model instanceof Customer) {
             return '%s_%s';
-        } elseif ($class === Order::class) {
+        } elseif ($this->model instanceof Order) {
             return '_%s_%s';
         }
 
         throw new InvalidArgumentException(sprintf(
             'Model "%s" cannot have address.',
-            $class
+            get_class($this->model)
         ));
     }
 
