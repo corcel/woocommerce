@@ -31,6 +31,12 @@ Some meta values are collected into helper classes:
 
 Currently PHP 8.0 is not supported.
 
+## Installation
+
+```bash
+composer require corcel/woocommerce
+```
+
 ## Models list
 
 ### Customer model
