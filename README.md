@@ -23,6 +23,12 @@ Some meta values are collected into helper classes:
 * [ShippingAddress](#shippingaddress-helper) - helper for customer and order shipping address
 * [Payment](#payment-helper) - helper for order payment
 
+## Installation
+
+```bash
+composer require corcel/woocommerce:^1.0
+```
+
 ## Models list
 
 ### Customer model
