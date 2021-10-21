@@ -1,5 +1,9 @@
 # WooCommerce Corcel Plugin changelog
 
+## v2.1.0 - 2021-10-21
+
+* PHP 8.0 support (c95576e)
+
 ## v2.0.3 - 2020-12-10
 
 * Fix: allow address to work with subclasses (#20)
