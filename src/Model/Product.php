@@ -249,7 +249,7 @@ class Product extends Post
      */
     protected function getAttributesAttribute(): BaseCollection
     {
-        $taxonomies = $this->taxonomies; // @phpstan-ignore-line
+        $taxonomies = $this->taxonomies;
 
         return $taxonomies
             ->filter(function ($taxonomy) {
@@ -308,8 +308,11 @@ class Product extends Post
      */
     public function getGalleryAttribute(): BaseCollection
     {
-        $thumbnail = $this->thumbnail; // @phpstan-ignore-line
-        $gallery   = new BaseCollection([$thumbnail->attachment]);
+        $gallery = new BaseCollection();
+
+        if ($thumbnail = $this->thumbnail) {
+            $gallery->push($thumbnail->attachment);
+        }
 
         $attachmentsId = $this->getMeta('_product_image_gallery');
 

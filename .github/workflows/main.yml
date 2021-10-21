@@ -19,6 +19,7 @@ jobs:
         php-version:
           - "7.3"
           - "7.4"
+          - "8.0"
         operating-system:
           - ubuntu-latest
           - windows-latest
@@ -50,7 +51,7 @@ jobs:
         restore-keys: php-${{ matrix.php-version }}-composer-
 
     - name: Install dependencies
-      run: composer update --no-interaction --no-progress --no-suggest
+      run: composer update --no-interaction --no-progress
 
     - name: PHPStan
       run: vendor/bin/phpstan analyse

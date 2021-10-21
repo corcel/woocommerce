@@ -16,7 +16,7 @@ class CreateTermRelationshipsTable extends Migration
     {
         Schema::create('term_relationships', function (Blueprint $table) {
             $table->unsignedBigInteger('object_id')->default(0)->primary();
-            $table->unsignedBigInteger('term_taxonomy_id')->default(0)->primary()->index();
+            $table->unsignedBigInteger('term_taxonomy_id')->default(0)->index();
             $table->integer('term_order');
         });
     }

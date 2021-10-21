@@ -1,12 +1,19 @@
-parameters:
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
 
+parameters:
     paths:
         - src
         - tests
 
     level: 8
 
+    noUnnecessaryCollectionCall: false
+
     ignoreErrors:
         -
-            message: '#Variable \$factory might not be defined.#'
+            message: '#Access to an undefined property Faker\\Generator::\$state.#'
             path: tests/*
+        -
+            message: '#Call to private method whereIn\(\) of parent class Illuminate\\Database\\Eloquent\\Builder<Illuminate\\Database\\Eloquent\\Model>.#'
+            path: src/Model/Product.php
