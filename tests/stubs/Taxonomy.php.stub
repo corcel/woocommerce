@@ -1,0 +1,10 @@
+<?php
+
+namespace Corcel\Model {
+    /**
+     * @property string|null $taxonomy
+     */
+    class Taxonomy {
+        //
+    }
+}

@@ -10,6 +10,9 @@ parameters:
 
     noUnnecessaryCollectionCall: false
 
+    stubFiles:
+        - tests/stubs/Taxonomy.php.stub
+
     ignoreErrors:
         -
             message: '#Access to an undefined property Faker\\Generator::\$[a-zA-Z]+?\.#'

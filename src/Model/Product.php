@@ -253,7 +253,7 @@ class Product extends Post
 
         return $taxonomies
             ->filter(function ($taxonomy) {
-                return Str::startsWith($taxonomy->taxonomy, 'pa_');
+                return $taxonomy->taxonomy !== null && Str::startsWith($taxonomy->taxonomy, 'pa_');
             })
             ->groupBy('taxonomy')
             ->map(function ($taxonomy, $taxonomyName) {
