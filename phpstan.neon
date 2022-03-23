@@ -11,7 +11,7 @@ parameters:
     noUnnecessaryCollectionCall: false
 
     stubFiles:
-        - tests/stubs/Taxonomy.php.stub
+        - tests/stubs/Corcel.stub
 
     ignoreErrors:
         -

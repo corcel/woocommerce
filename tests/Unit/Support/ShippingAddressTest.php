@@ -103,6 +103,7 @@ class ShippingAddressTest extends TestCase
 
     private function createOrderShippingAddress(): ShippingAddress
     {
+        /** @var Order */
         $order = factory(Order::class)->create();
         $order->createMeta(self::ORDER_META_FIELDS);
 
@@ -111,6 +112,7 @@ class ShippingAddressTest extends TestCase
 
     private function createCustomerShippingAddress(): ShippingAddress
     {
+        /** @var Customer */
         $customer = factory(Customer::class)->create();
         $customer->createMeta(self::CUSTOMER_META_FIELDS);
 

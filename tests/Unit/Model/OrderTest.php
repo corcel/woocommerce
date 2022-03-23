@@ -117,6 +117,7 @@ class OrderTest extends TestCase
 
     public function testArrayHasAppendedValues(): void
     {
+        /** @var Order */
         $order = factory(Order::class)->create();
         $array = $order->toArray();
 
@@ -135,13 +136,13 @@ class OrderTest extends TestCase
 
     public function testRelatedCustomer(): void
     {
-        /** @var \Corcel\WooCommerce\Model\Customer */
+        /** @var Customer */
         $customer = factory(Customer::class)->create();
 
         $order = $this->createOrder();
-        $order->createMeta('_customer_user', $customer->ID); // @phpstan-ignore-line
+        $order->createMeta('_customer_user', $customer->ID);
 
-        /** @var \Corcel\WooCommerce\Model\Customer */
+        /** @var Customer */
         $orderCustomer = $order->customer;
 
         $this->assertTrue($orderCustomer->is($customer));
@@ -158,7 +159,7 @@ class OrderTest extends TestCase
     {
         $order = $this->createOrder();
 
-        $item = factory(Item::class, 3)->create(['order_id' => $order->ID]); // @phpstan-ignore-line
+        $item = factory(Item::class, 3)->create(['order_id' => $order->ID]);
 
         $this->assertSame(3, $order->items->count());
     }
@@ -168,6 +169,9 @@ class OrderTest extends TestCase
      */
     private function createOrder(array $attributes = []): Order
     {
-        return factory(Order::class)->create($attributes);
+        /** @var Order */
+        $order = factory(Order::class)->create($attributes);
+
+        return $order;
     }
 }

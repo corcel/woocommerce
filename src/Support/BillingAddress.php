@@ -23,7 +23,7 @@ class BillingAddress extends Address
     /**
      * @inheritDoc
      *
-     * @param \Corcel\Model $model
+     * @param Model $model
      */
     public function __construct(Model $model)
     {

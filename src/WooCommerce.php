@@ -12,7 +12,7 @@ class WooCommerce
      *
      * @var  string|null
      */
-    private static $currency;
+    private static ?string $currency = null;
 
     /**
      * Get the shop currency.
@@ -22,7 +22,9 @@ class WooCommerce
     public static function currency(): string
     {
         if (self::$currency === null) {
-            self::$currency = Option::get('woocommerce_currency');
+            $currency = Option::get('woocommerce_currency');
+
+            self::$currency = is_scalar($currency) ? (string) $currency : '';
         }
 
         return self::$currency;

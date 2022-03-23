@@ -15,6 +15,7 @@ class AddressTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
+        /** @var Item */
         $model = factory(Item::class)->create();
 
         new Address($model, 'billing');
@@ -24,12 +25,13 @@ class AddressTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
+        /** @var Order */
         $order   = factory(Order::class)->create();
         $address = new class($order, 'billing') extends Address {
             public function toArray(): array
             {
                 return [
-                    fopen('php://input', 'r'),
+                    'invalid' => fopen('php://input', 'r'),
                 ];
             }
         };

@@ -21,12 +21,13 @@ trait HasRelationsThroughMeta
      * @param   string       $metaKey
      * @param   string|null  $foreignKey
      * @param   string|null  $localKey
-     * @return  \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return  HasMany
      * @throws  InvalidArgumentException
      * @throws  LogicException
      */
     public function hasManyThroughMeta(string $related, string $metaKey, string $foreignKey = null, string $localKey = null): HasMany
     {
+        /** @var Model */
         $model = $this->newRelatedInstance($related);
         $meta  = $this->metaInstance($model);
 

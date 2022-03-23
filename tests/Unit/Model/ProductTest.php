@@ -157,12 +157,14 @@ class ProductTest extends TestCase
 
     public function testCrosssellsProperty(): void
     {
+        /** @var \Illuminate\Database\Eloquent\Collection<int, Product> */
         $crosssellProducts = factory(Product::class, 2)->create();
 
         $product = $this->createProduct();
         $product->createMeta('_crosssell_ids', serialize($crosssellProducts->pluck('ID')->toArray()));
 
         $this->assertSame(2, $product->crosssells->count());
+        // @phpstan-ignore-next-line
         $this->assertTrue($product->crosssells->first()->is($crosssellProducts->first()));
     }
 
@@ -176,12 +178,14 @@ class ProductTest extends TestCase
 
     public function testUpsellsProperty(): void
     {
+        /** @var \Illuminate\Database\Eloquent\Collection<int, Product> */
         $upsellProducts = factory(Product::class, 3)->create();
 
         $product = $this->createProduct();
         $product->createMeta('_upsell_ids', serialize($upsellProducts->pluck('ID')->toArray()));
 
         $this->assertSame(3, $product->upsells->count());
+        // @phpstan-ignore-next-line
         $this->assertTrue($product->upsells->first()->is($upsellProducts->first()));
     }
 
@@ -197,18 +201,24 @@ class ProductTest extends TestCase
     {
         $product = $this->createProduct();
 
+        /** @var Item */
         $firstItem = factory(Item::class)->create();
-        $firstItem->createMeta('_product_id', $product->ID); // @phpstan-ignore-line
+        $firstItem->createMeta('_product_id', $product->ID);
 
+        /** @var Item */
         $secondItem = factory(Item::class)->create();
-        $secondItem->createMeta('_product_id', $product->ID); // @phpstan-ignore-line
+        $secondItem->createMeta('_product_id', $product->ID);
 
         $this->assertSame(2, $product->items->count());
+        // @phpstan-ignore-next-line
         $this->assertTrue($product->items->first()->is($firstItem));
     }
 
     private function createProduct(): Product
     {
-        return factory(Product::class)->create();
+        /** @var Product */
+        $product = factory(Product::class)->create();
+
+        return $product;
     }
 }

@@ -60,6 +60,7 @@ class ItemTest extends TestCase
 
     public function testRelatedOrder(): void
     {
+        /** @var Order */
         $order = factory(Order::class)->create();
         $item  = $this->createItem(['order_id' => $order->ID]);
 
@@ -72,7 +73,7 @@ class ItemTest extends TestCase
         $product = factory(Product::class)->create();
 
         $item = $this->createItem();
-        $item->createMeta('_product_id', $product->ID); // @phpstan-ignore-line
+        $item->createMeta('_product_id', $product->ID);
 
         $this->assertTrue($item->product->is($product));
     }
@@ -82,6 +83,9 @@ class ItemTest extends TestCase
      */
     private function createItem(array $attributes = []): Item
     {
-        return factory(Item::class)->create($attributes);
+        /** @var Item */
+        $item = factory(Item::class)->create($attributes);
+
+        return $item;
     }
 }

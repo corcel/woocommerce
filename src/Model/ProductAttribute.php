@@ -28,14 +28,14 @@ class ProductAttribute extends Model
     /**
      * The terms collection.
      *
-     * @var  \Illuminate\Support\Collection<mixed>
+     * @var  Collection<int, mixed>
      */
-    public $terms;
+    public Collection $terms;
 
     /**
      * The model aliases.
      *
-     * @var  string[]
+     * @var  array<string, string>
      */
     protected static $aliases = [
         'id'       => 'attribute_id',
@@ -68,7 +68,7 @@ class ProductAttribute extends Model
     /**
      * Set the product terms.
      *
-     * @param  \Illuminate\Support\Collection<mixed>  $terms
+     * @param  Collection<int, mixed>  $terms
      */
     public function setTerms(Collection $terms): void
     {

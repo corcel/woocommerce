@@ -1,0 +1,24 @@
+<?php
+
+namespace Corcel\Model {
+    /**
+     * @property string $ID
+     */
+    class Post {
+        //
+    }
+
+    /**
+     * @property string|null $taxonomy
+     */
+    class Taxonomy {
+        //
+    }
+
+    /**
+     * @property string $ID
+     */
+    class User {
+        //
+    }
+}

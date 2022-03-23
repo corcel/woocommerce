@@ -10,34 +10,37 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use InvalidArgumentException;
 
+/**
+ * @implements Arrayable<string, mixed>
+ */
 class Address implements Arrayable, Jsonable
 {
     /**
      * The model instance.
      *
-     * @var  \Corcel\Model
+     * @var  Model
      */
-    protected $model;
+    protected Model $model;
 
     /**
      * The address type.
      *
      * @var  string
      */
-    protected $type;
+    protected string $type;
 
     /**
      * The address attributes.
      *
-     * @var  mixed[]
+     * @var  array<string, mixed>
      */
-    protected $attributes = [];
+    protected array $attributes = [];
 
     /**
      * The address constructor.
      *
-     * @param  \Corcel\Model  $model
-     * @param  string         $type
+     * @param  Model   $model
+     * @param  string  $type
      */
     public function __construct(Model $model, string $type)
     {
@@ -65,7 +68,7 @@ class Address implements Arrayable, Jsonable
     /**
      * List of the attribute keys.
      *
-     * @return  string[]
+     * @return  array<string>
      */
     protected function attributeKeys(): array
     {
@@ -126,7 +129,7 @@ class Address implements Arrayable, Jsonable
     /**
      * @inheritDoc
      *
-     * @return  mixed[]
+     * @return  array<string, mixed>
      */
     public function toArray(): array
     {

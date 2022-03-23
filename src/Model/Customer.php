@@ -9,8 +9,8 @@ use Corcel\WooCommerce\Traits\HasRelationsThroughMeta;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property int                                       $order_count
- * @property \Illuminate\Database\Eloquent\Collection  $orders
+ * @property int         $order_count
+ * @property Collection  $orders
  */
 class Customer extends User
 {
@@ -20,7 +20,7 @@ class Customer extends User
     /**
      * @inheritDoc
      *
-     * @var  string[]
+     * @var  array<string>
      */
     protected $appends = [
         'order_count',
@@ -33,13 +33,15 @@ class Customer extends User
      */
     protected function getOrderCountAttribute(): int
     {
-        return (int) $this->getMeta('_order_count');
+        $count = $this->getMeta('_order_count');
+
+        return is_numeric($count) ? (int) $count : 0;
     }
 
     /**
      * Get the related orders.
      *
-     * @return  \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return  HasMany<Order>
      */
     public function orders(): HasMany
     {

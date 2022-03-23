@@ -30,21 +30,24 @@ class CustomerTest extends TestCase
     {
         $customer = $this->createCustomer();
 
-        /** @var \Corcel\WooCommerce\Model\Order */
+        /** @var Order */
         $order = factory(Order::class)->create();
-        $order->createMeta('_customer_user', $customer->ID); // @phpstan-ignore-line
+        $order->createMeta('_customer_user', $customer->ID);
 
         $this->assertTrue($customer->orders()->get()->first()->is($order)); // @phpstan-ignore-line
 
-        /** @var \Corcel\WooCommerce\Model\Order */
+        /** @var Order */
         $order = factory(Order::class)->create();
-        $order->createMeta('_customer_user', $customer->ID); // @phpstan-ignore-line
+        $order->createMeta('_customer_user', $customer->ID);
 
         $this->assertSame(2, $customer->orders()->count()); // @phpstan-ignore-line
     }
 
     private function createCustomer(): Customer
     {
-        return factory(Customer::class)->create();
+        /** @var Customer */
+        $customer = factory(Customer::class)->create();
+
+        return $customer;
     }
 }

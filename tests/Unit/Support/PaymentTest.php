@@ -43,12 +43,13 @@ class PaymentTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
+        /** @var Order */
         $order   = factory(Order::class)->create();
         $payment = new class($order) extends Payment {
             public function toArray(): array
             {
                 return [
-                    fopen('php://input', 'r'),
+                    'invalid' => fopen('php://input', 'r'),
                 ];
             }
         };
@@ -58,6 +59,7 @@ class PaymentTest extends TestCase
 
     private function createPayment(): Payment
     {
+        /** @var Order */
         $order = factory(Order::class)->create();
         $order->createMeta([
             '_payment_method'       => 'test',
