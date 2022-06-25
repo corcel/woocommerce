@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Support;
@@ -103,7 +104,8 @@ class ShippingAddressTest extends TestCase
 
     private function createOrderShippingAddress(): ShippingAddress
     {
-        $order = factory(Order::class)->create();
+        /** @var Order */
+        $order = Order::factory()->create();
         $order->createMeta(self::ORDER_META_FIELDS);
 
         return new ShippingAddress($order);
@@ -111,7 +113,8 @@ class ShippingAddressTest extends TestCase
 
     private function createCustomerShippingAddress(): ShippingAddress
     {
-        $customer = factory(Customer::class)->create();
+        /** @var Customer */
+        $customer = Customer::factory()->create();
         $customer->createMeta(self::CUSTOMER_META_FIELDS);
 
         return new ShippingAddress($customer);

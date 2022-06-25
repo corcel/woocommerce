@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Model;
@@ -30,21 +31,22 @@ class CustomerTest extends TestCase
     {
         $customer = $this->createCustomer();
 
-        /** @var \Corcel\WooCommerce\Model\Order */
-        $order = factory(Order::class)->create();
-        $order->createMeta('_customer_user', $customer->ID); // @phpstan-ignore-line
+        /** @var Order */
+        $order = Order::factory()->create();
+        $order->createMeta('_customer_user', $customer->ID);
 
         $this->assertTrue($customer->orders()->get()->first()->is($order)); // @phpstan-ignore-line
 
-        /** @var \Corcel\WooCommerce\Model\Order */
-        $order = factory(Order::class)->create();
-        $order->createMeta('_customer_user', $customer->ID); // @phpstan-ignore-line
+        /** @var Order */
+        $order = Order::factory()->create();
+        $order->createMeta('_customer_user', $customer->ID);
 
         $this->assertSame(2, $customer->orders()->count()); // @phpstan-ignore-line
     }
 
     private function createCustomer(): Customer
     {
-        return factory(Customer::class)->create();
+        /** @var Customer */
+        return Customer::factory()->create();
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Model;
@@ -60,8 +61,9 @@ class ItemTest extends TestCase
 
     public function testRelatedOrder(): void
     {
-        $order = factory(Order::class)->create();
-        $item  = $this->createItem(['order_id' => $order->ID]);
+        /** @var Order */
+        $order = Order::factory()->create();
+        $item = $this->createItem(['order_id' => $order->ID]);
 
         $this->assertTrue($item->order->is($order));
     }
@@ -69,19 +71,22 @@ class ItemTest extends TestCase
     public function testRelatedProduct(): void
     {
         /** @var \Corcel\WooCommerce\Model\Product */
-        $product = factory(Product::class)->create();
+        $product = Product::factory()->create();
 
         $item = $this->createItem();
-        $item->createMeta('_product_id', $product->ID); // @phpstan-ignore-line
+        $item->createMeta('_product_id', $product->ID);
 
         $this->assertTrue($item->product->is($product));
     }
 
     /**
-     * @param mixed[]  $attributes
+     * @param  mixed[]  $attributes
      */
     private function createItem(array $attributes = []): Item
     {
-        return factory(Item::class)->create($attributes);
+        /** @var Item */
+        $item = Item::factory()->create($attributes);
+
+        return $item;
     }
 }

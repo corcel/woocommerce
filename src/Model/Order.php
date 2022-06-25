@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Model;
@@ -10,25 +11,29 @@ use Corcel\Model\Post;
 use Corcel\WooCommerce\Model\Builder\OrderBuilder;
 use Corcel\WooCommerce\Support\Payment;
 use Corcel\WooCommerce\Traits\AddressesTrait;
+use Database\Factories\OrderFactory;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property int|null                                  $customer_id
- * @property string|null                               $currency
- * @property string|null                               $total
- * @property string|null                               $shipping
- * @property string|null                               $tax
- * @property string|null                               $shipping_tax
- * @property string                                    $status
- * @property \Carbon\Carbon|null                       $date_completed
- * @property \Carbon\Carbon|null                       $date_paid
- * @property \Corcel\WooCommerce\Support\Payment       $payment
- * @property \Corcel\WooCommerce\Model\Customer|null   $customer
- * @property \Illuminate\Database\Eloquent\Collection  $items
+ * @property int|null       $customer_id
+ * @property string|null    $currency
+ * @property string|null    $total
+ * @property string|null    $shipping
+ * @property string|null    $tax
+ * @property string|null    $shipping_tax
+ * @property string         $status
+ * @property Carbon|null    $date_completed
+ * @property Carbon|null    $date_paid
+ * @property Payment        $payment
+ * @property Customer|null  $customer
+ * @property Collection     $items
  */
 class Order extends Post
 {
+    use HasFactory;
     use Aliases;
     use AddressesTrait;
     use MetaFields;
@@ -36,7 +41,7 @@ class Order extends Post
     /**
      * The model aliases.
      *
-     * @var  string[][]
+     * @var  array<string, array<string, string>>
      */
     protected static $aliases = [
         'customer_id' => ['meta' => '_customer_user'],
@@ -45,7 +50,7 @@ class Order extends Post
     /**
      * @inheritDoc
      *
-     * @var  string[]
+     * @var  array<string>
      */
     protected $appends = [
         'currency',
@@ -67,6 +72,16 @@ class Order extends Post
     protected $postType = 'shop_order';
 
     /**
+     * Create a new factory instance for the model.
+     *
+     * @return OrderFactory
+     */
+    protected static function newFactory(): OrderFactory
+    {
+        return OrderFactory::new();
+    }
+
+    /**
      * @inheritDoc
      */
     public function newEloquentBuilder($builder): OrderBuilder
@@ -81,7 +96,9 @@ class Order extends Post
      */
     protected function getCurrencyAttribute(): ?string
     {
-        return $this->getMeta('_order_currency');
+        $currency = $this->getMeta('_order_currency');
+
+        return is_scalar($currency) ? (string) $currency : null;
     }
 
     /**
@@ -91,7 +108,9 @@ class Order extends Post
      */
     protected function getTotalAttribute(): ?string
     {
-        return $this->getMeta('_order_total');
+        $total = $this->getMeta('_order_total');
+
+        return is_scalar($total) ? (string) $total : null;
     }
 
     /**
@@ -101,7 +120,9 @@ class Order extends Post
      */
     protected function getShippingAttribute(): ?string
     {
-        return $this->getMeta('_order_shipping');
+        $shipping = $this->getMeta('_order_shipping');
+
+        return is_scalar($shipping) ? (string) $shipping : null;
     }
 
     /**
@@ -111,7 +132,9 @@ class Order extends Post
      */
     protected function getTaxAttribute(): ?string
     {
-        return $this->getMeta('_order_tax');
+        $tax = $this->getMeta('_order_tax');
+
+        return is_scalar($tax) ? (string) $tax : null;
     }
 
     /**
@@ -121,7 +144,9 @@ class Order extends Post
      */
     protected function getShippingTaxAttribute(): ?string
     {
-        return $this->getMeta('_order_shipping_tax');
+        $shippingTax = $this->getMeta('_order_shipping_tax');
+
+        return is_scalar($shippingTax) ? (string) $shippingTax : null;
     }
 
     /**
@@ -139,13 +164,13 @@ class Order extends Post
     /**
      * Get the completed date attribute.
      *
-     * @return \Carbon\Carbon|null
+     * @return Carbon|null
      */
     protected function getDateCompletedAttribute(): ?Carbon
     {
         $value = $this->getMeta('_date_completed');
 
-        if ($value !== null) {
+        if (is_numeric($value)) {
             return Carbon::createFromTimestamp($value);
         }
 
@@ -155,7 +180,7 @@ class Order extends Post
          */
         $value = $this->getMeta('_completed_date');
 
-        if ($value !== null) {
+        if (is_string($value)) {
             $datetime = Carbon::createFromFormat('Y-m-d H:i:s', $value);
 
             return $datetime !== false ? $datetime : null;
@@ -167,13 +192,13 @@ class Order extends Post
     /**
      * Get the paid date attribute.
      *
-     * @return \Carbon\Carbon|null
+     * @return Carbon|null
      */
     public function getDatePaidAttribute(): ?Carbon
     {
         $value = $this->getMeta('_date_paid');
 
-        if ($value !== null) {
+        if (is_numeric($value)) {
             return Carbon::createFromTimestamp($value);
         }
 
@@ -183,7 +208,7 @@ class Order extends Post
          */
         $value = $this->getMeta('_paid_date');
 
-        if ($value !== null) {
+        if (is_string($value)) {
             $datetime = Carbon::createFromFormat('Y-m-d H:i:s', $value);
 
             return $datetime !== false ? $datetime : null;
@@ -195,7 +220,7 @@ class Order extends Post
     /**
      * Get the payment attribute.
      *
-     * @return \Corcel\WooCommerce\Support\Payment
+     * @return Payment
      */
     public function getPaymentAttribute(): Payment
     {
@@ -205,7 +230,7 @@ class Order extends Post
     /**
      * Get the related customer.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return BelongsTo<Customer, Order>
      */
     public function customer(): BelongsTo
     {
@@ -215,7 +240,7 @@ class Order extends Post
     /**
      * Get related items.
      *
-     * @return  \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return  HasMany<Item>
      */
     public function items(): HasMany
     {

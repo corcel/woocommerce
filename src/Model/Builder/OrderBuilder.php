@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Model\Builder;
@@ -97,7 +98,7 @@ class OrderBuilder extends PostBuilder
         ];
 
         if (in_array($status, $builtin)) {
-            $status = 'wc-' . $status;
+            $status = 'wc-'.$status;
         }
 
         return parent::status($status);

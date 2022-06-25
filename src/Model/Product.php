@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Model;
@@ -8,55 +9,62 @@ use Corcel\Concerns\MetaFields;
 use Corcel\Model\Attachment;
 use Corcel\Model\Post;
 use Corcel\WooCommerce\Traits\HasRelationsThroughMeta;
+use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection as BaseCollection;
 use Illuminate\Support\Str;
 
 /**
- * @property string|null                               $price
- * @property string|null                               $regular_price
- * @property string|null                               $sale_price
- * @property bool                                      $on_sale
- * @property string|null                               $sku
- * @property string|null                               $tax_status
- * @property bool                                      $is_taxable
- * @property string|null                               $weight
- * @property string|null                               $length
- * @property string|null                               $width
- * @property string|null                               $height
- * @property bool                                      $is_virtual
- * @property bool                                      $is_downloadable
- * @property string|null                               $stock
- * @property bool                                      $in_stock
- * @property string|null                               $type
- * @property \Illuminate\Support\Collection            $attributes
- * @property \Illuminate\Database\Eloquent\Collection  $crosssells
- * @property \Illuminate\Database\Eloquent\Collection  $upsells
- * @property \Illuminate\Support\Collection            $gallery
- * @property \Illuminate\Database\Eloquent\Collection  $categories
- * @property \Illuminate\Database\Eloquent\Collection  $items
- * @property \Illuminate\Database\Eloquent\Collection  $productTypes
- * @property \Illuminate\Database\Eloquent\Collection  $tags
+ * @property string|null              $price
+ * @property string|null              $regular_price
+ * @property string|null              $sale_price
+ * @property bool                     $on_sale
+ * @property string|null              $sku
+ * @property string|null              $tax_status
+ * @property bool                     $is_taxable
+ * @property string|null              $weight
+ * @property string|null              $length
+ * @property string|null              $width
+ * @property string|null              $height
+ * @property bool                     $is_virtual
+ * @property bool                     $is_downloadable
+ * @property string|null              $stock
+ * @property bool                     $in_stock
+ * @property string|null              $type
+ * @property BaseCollection           $attributes
+ * @property Collection<Product>      $crosssells
+ * @property Collection               $upsells
+ * @property BaseCollection           $gallery
+ * @property Collection               $categories
+ * @property Collection               $items
+ * @property Collection<ProductType>  $productTypes
+ * @property Collection               $tags
  */
 class Product extends Post
 {
+    use HasFactory;
     use Aliases;
     use MetaFields;
+
+    /**
+     * @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model>
+     */
     use HasRelationsThroughMeta;
 
     /**
      * Preloaded product attributes list.
      *
-     * @var  \Illuminate\Database\Eloquent\Collection<\Corcel\WooCommerce\Model\ProductAttribute>
+     * @var  Collection<string, ProductAttribute>
      */
     protected static $productAttributes;
 
     /**
      * @inheritDoc
      *
-     * @var  string[]
+     * @var  array<string>
      */
     protected $appends = [
         'price',
@@ -93,13 +101,25 @@ class Product extends Post
     }
 
     /**
+     * Create a new factory instance for the model.
+     *
+     * @return ProductFactory
+     */
+    protected static function newFactory(): ProductFactory
+    {
+        return ProductFactory::new();
+    }
+
+    /**
      * Get the price attribute.
      *
      * @return  string|null
      */
     protected function getPriceAttribute(): ?string
     {
-        return $this->getMeta('_price');
+        $price = $this->getMeta('_price');
+
+        return is_scalar($price) ? (string) $price : null;
     }
 
     /**
@@ -109,7 +129,9 @@ class Product extends Post
      */
     protected function getRegularPriceAttribute(): ?string
     {
-        return $this->getMeta('_regular_price');
+        $regularPrice = $this->getMeta('_regular_price');
+
+        return is_scalar($regularPrice) ? (string) $regularPrice : null;
     }
 
     /**
@@ -119,7 +141,9 @@ class Product extends Post
      */
     protected function getSalePriceAttribute(): ?string
     {
-        return $this->getMeta('_sale_price');
+        $salePrice = $this->getMeta('_sale_price');
+
+        return is_scalar($salePrice) ? (string) $salePrice : null;
     }
 
     /**
@@ -129,7 +153,7 @@ class Product extends Post
      */
     protected function getOnSaleAttribute(): bool
     {
-        return !empty($this->sale_price) && $this->sale_price < $this->regular_price;
+        return ! empty($this->sale_price) && $this->sale_price < $this->regular_price;
     }
 
     /**
@@ -139,7 +163,9 @@ class Product extends Post
      */
     protected function getSkuAttribute(): ?string
     {
-        return $this->getMeta('_sku');
+        $sku = $this->getMeta('_sku');
+
+        return is_scalar($sku) ? (string) $sku : null;
     }
 
     /**
@@ -149,7 +175,9 @@ class Product extends Post
      */
     protected function getTaxStatusAttribute(): ?string
     {
-        return $this->getMeta('_tax_status');
+        $taxStatus = $this->getMeta('_tax_status');
+
+        return is_scalar($taxStatus) ? (string) $taxStatus : null;
     }
 
     /**
@@ -169,7 +197,9 @@ class Product extends Post
      */
     protected function getWeightAttribute(): ?string
     {
-        return $this->getMeta('_weight');
+        $weight = $this->getMeta('_weight');
+
+        return is_scalar($weight) ? (string) $weight : null;
     }
 
     /**
@@ -179,7 +209,9 @@ class Product extends Post
      */
     protected function getLengthAttribute(): ?string
     {
-        return $this->getMeta('_length');
+        $length = $this->getMeta('_length');
+
+        return is_scalar($length) ? (string) $length : null;
     }
 
     /**
@@ -189,7 +221,9 @@ class Product extends Post
      */
     protected function getWidthAttribute(): ?string
     {
-        return $this->getMeta('_width');
+        $width = $this->getMeta('_width');
+
+        return is_scalar($width) ? (string) $width : null;
     }
 
     /**
@@ -199,7 +233,9 @@ class Product extends Post
      */
     protected function getHeightAttribute(): ?string
     {
-        return $this->getMeta('_height');
+        $height = $this->getMeta('_height');
+
+        return is_scalar($height) ? (string) $height : null;
     }
 
     /**
@@ -229,7 +265,9 @@ class Product extends Post
      */
     protected function getStockAttribute(): ?string
     {
-        return $this->getMeta('_stock');
+        $stock = $this->getMeta('_stock');
+
+        return is_scalar($stock) ? (string) $stock : null;
     }
 
     /**
@@ -245,7 +283,7 @@ class Product extends Post
     /**
      * Get the product attributes attribute.
      *
-     * @return  \Illuminate\Support\Collection<\Corcel\WooCommerce\Model\ProductAttribute>
+     * @return  BaseCollection<string, ProductAttribute>
      */
     protected function getAttributesAttribute(): BaseCollection
     {
@@ -270,15 +308,20 @@ class Product extends Post
     /**
      * Get the cross-sells attribute.
      *
-     * @return \Illuminate\Database\Eloquent\Collection<mixed>
+     * @return Collection<int, Product>
      */
     protected function getCrosssellsAttribute(): Collection
     {
         $crosssells = $this->getMeta('_crosssell_ids');
+
+        if (! is_string($crosssells)) {
+            return static::newCollection();
+        }
+
         $crosssells = unserialize($crosssells);
 
         if (empty($crosssells)) {
-            return new Collection();
+            return static::newCollection();
         }
 
         return static::query()->whereIn('ID', $crosssells)->get();
@@ -287,15 +330,20 @@ class Product extends Post
     /**
      * Get the up-sells attribute.
      *
-     * @return \Illuminate\Database\Eloquent\Collection<mixed>
+     * @return Collection<int, Product>
      */
     public function getUpsellsAttribute(): Collection
     {
         $upsells = $this->getMeta('_upsell_ids');
+
+        if (! is_string($upsells)) {
+            return static::newCollection();
+        }
+
         $upsells = unserialize($upsells);
 
         if (empty($upsells)) {
-            return new Collection();
+            return static::newCollection();
         }
 
         return static::query()->whereIn('ID', $upsells)->get();
@@ -304,7 +352,7 @@ class Product extends Post
     /**
      * Get the gallery attribute.
      *
-     * @return \Illuminate\Support\Collection<\Corcel\Model\Attachment>
+     * @return BaseCollection<int, Attachment>
      */
     public function getGalleryAttribute(): BaseCollection
     {
@@ -316,12 +364,12 @@ class Product extends Post
 
         $attachmentsId = $this->getMeta('_product_image_gallery');
 
-        if (empty($attachmentsId)) {
+        if (! is_string($attachmentsId) || empty($attachmentsId)) {
             return $gallery;
         }
 
         $attachmentsId = explode(',', $attachmentsId);
-        $attachments   = Attachment::query()->whereIn('ID', $attachmentsId)->get();
+        $attachments = Attachment::query()->whereIn('ID', $attachmentsId)->get();
 
         return $gallery->merge($attachments);
     }
@@ -333,13 +381,16 @@ class Product extends Post
      */
     protected function getTypeAttribute(): ?string
     {
-        return $this->productTypes->pluck('term.name')->first();
+        /** @var BaseCollection<int, string> */
+        $productTypeNames = $this->productTypes->pluck('term.name');
+
+        return $productTypeNames->first();
     }
 
     /**
      * Get the related categories.
      *
-     * @return  \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return  BelongsToMany<ProductCategory>
      */
     public function categories(): BelongsToMany
     {
@@ -354,7 +405,7 @@ class Product extends Post
     /**
      * Get the related items.
      *
-     * @return  \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return  HasMany<\Illuminate\Database\Eloquent\Model>
      */
     public function items(): HasMany
     {
@@ -369,7 +420,7 @@ class Product extends Post
     /**
      * Get the related product types.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany<ProductType>
      */
     public function productTypes(): BelongsToMany
     {
@@ -384,7 +435,7 @@ class Product extends Post
     /**
      * Get the related tags.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return BelongsToMany<ProductTag>
      */
     public function tags(): BelongsToMany
     {

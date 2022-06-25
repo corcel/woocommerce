@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Model;
@@ -117,7 +118,8 @@ class OrderTest extends TestCase
 
     public function testArrayHasAppendedValues(): void
     {
-        $order = factory(Order::class)->create();
+        /** @var Order */
+        $order = Order::factory()->create();
         $array = $order->toArray();
 
         $this->assertArrayHasKey('currency', $array);
@@ -135,13 +137,13 @@ class OrderTest extends TestCase
 
     public function testRelatedCustomer(): void
     {
-        /** @var \Corcel\WooCommerce\Model\Customer */
-        $customer = factory(Customer::class)->create();
+        /** @var Customer */
+        $customer = Customer::factory()->create();
 
         $order = $this->createOrder();
-        $order->createMeta('_customer_user', $customer->ID); // @phpstan-ignore-line
+        $order->createMeta('_customer_user', $customer->ID);
 
-        /** @var \Corcel\WooCommerce\Model\Customer */
+        /** @var Customer */
         $orderCustomer = $order->customer;
 
         $this->assertTrue($orderCustomer->is($customer));
@@ -158,16 +160,19 @@ class OrderTest extends TestCase
     {
         $order = $this->createOrder();
 
-        $item = factory(Item::class, 3)->create(['order_id' => $order->ID]); // @phpstan-ignore-line
+        $item = Item::factory()->count(3)->create(['order_id' => $order->ID]);
 
         $this->assertSame(3, $order->items->count());
     }
 
     /**
-     * @param mixed[]  $attributes
+     * @param  mixed[]  $attributes
      */
     private function createOrder(array $attributes = []): Order
     {
-        return factory(Order::class)->create($attributes);
+        /** @var Order */
+        $order = Order::factory()->create($attributes);
+
+        return $order;
     }
 }

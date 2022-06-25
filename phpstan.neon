@@ -6,12 +6,12 @@ parameters:
         - src
         - tests
 
-    level: 8
+    level: max
 
     noUnnecessaryCollectionCall: false
 
     stubFiles:
-        - tests/stubs/Taxonomy.php.stub
+        - stubs/Corcel.stub
 
     ignoreErrors:
         -

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Model;
@@ -7,6 +8,8 @@ use Corcel\Concerns\Aliases;
 use Corcel\Concerns\MetaFields;
 use Corcel\Model;
 use Corcel\WooCommerce\Model\Meta\ItemMeta;
+use Database\Factories\ItemFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -31,13 +34,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Item extends Model
 {
+    use HasFactory;
     use Aliases;
     use MetaFields;
 
     /**
      * The model aliases.
      *
-     * @var  string[][]|string[]
+     * @var  array<string, string>|array<string, array<string, string>>
      */
     protected static $aliases = [
         'id'           => 'order_item_id',
@@ -50,7 +54,7 @@ class Item extends Model
     /**
      * @inheritDoc
      *
-     * @var  string[]
+     * @var  array<string>
      */
     protected $appends = [
         'quantity',
@@ -83,13 +87,25 @@ class Item extends Model
     public $timestamps = false;
 
     /**
+     * Create a new factory instance for the model.
+     *
+     * @return ItemFactory
+     */
+    protected static function newFactory(): ItemFactory
+    {
+        return ItemFactory::new();
+    }
+
+    /**
      * Get the line subtotal attribute.
      *
      * @return  string|null
      */
-    protected function getLineSubtotalAttribute()
+    protected function getLineSubtotalAttribute(): ?string
     {
-        return $this->getMeta('_line_subtotal');
+        $lineSubtotal = $this->getMeta('_line_subtotal');
+
+        return is_scalar($lineSubtotal) ? (string) $lineSubtotal : null;
     }
 
     /**
@@ -97,9 +113,11 @@ class Item extends Model
      *
      * @return  string|null
      */
-    protected function getLineSubtotalTaxAttribute()
+    protected function getLineSubtotalTaxAttribute(): ?string
     {
-        return $this->getMeta('_line_subtotal_tax');
+        $lineSubtotalTax = $this->getMeta('_line_subtotal_tax');
+
+        return is_scalar($lineSubtotalTax) ? (string) $lineSubtotalTax : null;
     }
 
     /**
@@ -107,9 +125,11 @@ class Item extends Model
      *
      * @return  string|null
      */
-    protected function getLineTaxAttribute()
+    protected function getLineTaxAttribute(): ?string
     {
-        return $this->getMeta('_line_tax');
+        $lineTax = $this->getMeta('_line_tax');
+
+        return is_scalar($lineTax) ? (string) $lineTax : null;
     }
 
     /**
@@ -117,9 +137,11 @@ class Item extends Model
      *
      * @return  string|null
      */
-    protected function getLineTotalAttribute()
+    protected function getLineTotalAttribute(): ?string
     {
-        return $this->getMeta('_line_total');
+        $lineTotal = $this->getMeta('_line_total');
+
+        return is_scalar($lineTotal) ? (string) $lineTotal : null;
     }
 
     /**
@@ -127,9 +149,11 @@ class Item extends Model
      *
      * @return  string|null
      */
-    protected function getQuantityAttribute()
+    protected function getQuantityAttribute(): ?string
     {
-        return $this->getMeta('_qty');
+        $quantity = $this->getMeta('_qty');
+
+        return is_scalar($quantity) ? (string) $quantity : null;
     }
 
     /**
@@ -137,15 +161,17 @@ class Item extends Model
      *
      * @return  string|null
      */
-    protected function getTaxClassAttribute()
+    protected function getTaxClassAttribute(): ?string
     {
-        return $this->getMeta('_tax_class');
+        $taxClass = $this->getMeta('_tax_class');
+
+        return is_scalar($taxClass) ? (string) $taxClass : null;
     }
 
     /**
      * @inheritDoc
      *
-     * @return  \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return  HasMany<ItemMeta>
      */
     public function meta(): HasMany
     {
@@ -155,7 +181,7 @@ class Item extends Model
     /**
      * Get the related order.
      *
-     * @return  \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return  BelongsTo<Order, Item>
      */
     public function order(): BelongsTo
     {
@@ -165,7 +191,7 @@ class Item extends Model
     /**
      * Get the related product.
      *
-     * @return  \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return  BelongsTo<Product, Item>
      */
     public function product(): BelongsTo
     {

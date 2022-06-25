@@ -24,10 +24,11 @@ Some meta values are collected into helper classes:
 
 ## Compatibility list
 
-| Corcel WooCommerce                                    | Laravel        | PHP version   |
-| ----------------------------------------------------- | -------------- | ------------- |
-| [1.x](https://github.com/corcel/woocommerce/tree/1.x) | 6.x, 7.x       | >= 7.2        |
-| 2.x (master)                                          | 6.x, 7.x, 8.x  | >= 7.3 \| 8.0 |
+| Corcel WooCommerce                                    | Laravel        | PHP version   | Supported          |
+| ----------------------------------------------------- | -------------- | ------------- | ------------------ |
+| 3.x (master)                                          | 9.x            | >= 8.0.3      | :white_check_mark: |
+| [2.x](https://github.com/corcel/woocommerce/tree/2.x) | 6.x, 7.x, 8.x  | >= 7.3 \| 8.0 | :white_check_mark: |
+| [1.x](https://github.com/corcel/woocommerce/tree/1.x) | 6.x, 7.x       | >= 7.2        | :x:                |
 
 ## Installation
 

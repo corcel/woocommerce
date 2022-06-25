@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Support;
@@ -15,7 +16,8 @@ class AddressTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $model = factory(Item::class)->create();
+        /** @var Item */
+        $model = Item::factory()->create();
 
         new Address($model, 'billing');
     }
@@ -24,12 +26,14 @@ class AddressTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $order   = factory(Order::class)->create();
-        $address = new class($order, 'billing') extends Address {
+        /** @var Order */
+        $order = Order::factory()->create();
+        $address = new class($order, 'billing') extends Address
+        {
             public function toArray(): array
             {
                 return [
-                    fopen('php://input', 'r'),
+                    'invalid' => fopen('php://input', 'r'),
                 ];
             }
         };

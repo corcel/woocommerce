@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests;
@@ -19,16 +20,14 @@ class TestCase extends BaseTestCase
         $this->loadMigrationsFrom([
             '--database' => 'wp',
             '--realpath' => true,
-            '--path'     => __DIR__ . '/database/migrations',
+            '--path'     => __DIR__.'/database/migrations',
         ]);
-
-        $this->withFactories(__DIR__ . '/database/factories');
     }
 
     /**
      * @inheritDoc
      *
-     * @param   \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Foundation\Application  $app
      * @return  void
      */
     protected function getEnvironmentSetUp($app): void
@@ -39,7 +38,7 @@ class TestCase extends BaseTestCase
     /**
      * Configure database.
      *
-     * @param   \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Foundation\Application  $app
      * @return  void
      */
     private function configureDatabaseConfig($app): void

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Support;
@@ -10,39 +11,42 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use InvalidArgumentException;
 
+/**
+ * @implements Arrayable<string, mixed>
+ */
 class Address implements Arrayable, Jsonable
 {
     /**
      * The model instance.
      *
-     * @var  \Corcel\Model
+     * @var  Model
      */
-    protected $model;
+    protected Model $model;
 
     /**
      * The address type.
      *
      * @var  string
      */
-    protected $type;
+    protected string $type;
 
     /**
      * The address attributes.
      *
-     * @var  mixed[]
+     * @var  array<string, mixed>
      */
-    protected $attributes = [];
+    protected array $attributes = [];
 
     /**
      * The address constructor.
      *
-     * @param  \Corcel\Model  $model
-     * @param  string         $type
+     * @param  Model  $model
+     * @param  string  $type
      */
     public function __construct(Model $model, string $type)
     {
         $this->model = $model;
-        $this->type  = $type;
+        $this->type = $type;
 
         $this->parseAttributes();
     }
@@ -65,7 +69,7 @@ class Address implements Arrayable, Jsonable
     /**
      * List of the attribute keys.
      *
-     * @return  string[]
+     * @return  array<string>
      */
     protected function attributeKeys(): array
     {
@@ -94,7 +98,7 @@ class Address implements Arrayable, Jsonable
     /**
      * Get meta key for given attribute name.
      *
-     * @param   string  $key
+     * @param  string  $key
      * @return  string
      */
     protected function getMetaKey(string $key): string
@@ -126,7 +130,7 @@ class Address implements Arrayable, Jsonable
     /**
      * @inheritDoc
      *
-     * @return  mixed[]
+     * @return  array<string, mixed>
      */
     public function toArray(): array
     {
@@ -136,7 +140,7 @@ class Address implements Arrayable, Jsonable
     /**
      * @inheritDoc
      *
-     * @param   int     $options
+     * @param  int  $options
      * @return  string
      */
     public function toJson($options = 0): string
@@ -153,7 +157,7 @@ class Address implements Arrayable, Jsonable
     /**
      * Magic method to get address attributes.
      *
-     * @param   string  $key
+     * @param  string  $key
      * @return  mixed
      */
     public function __get(string $key)

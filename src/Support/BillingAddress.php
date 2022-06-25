@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Support;
@@ -23,7 +24,7 @@ class BillingAddress extends Address
     /**
      * @inheritDoc
      *
-     * @param \Corcel\Model $model
+     * @param  Model  $model
      */
     public function __construct(Model $model)
     {

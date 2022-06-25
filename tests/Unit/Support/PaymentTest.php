@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Support;
@@ -22,7 +23,7 @@ class PaymentTest extends TestCase
     public function testToArrayMethod(): void
     {
         $payment = $this->createPayment();
-        $array   = [
+        $array = [
             'method'         => 'test',
             'method_title'   => 'Test',
             'transaction_id' => 'tid-000',
@@ -34,7 +35,7 @@ class PaymentTest extends TestCase
     public function testToJsonMethod(): void
     {
         $payment = $this->createPayment();
-        $json    = '{"method":"test","method_title":"Test","transaction_id":"tid-000"}';
+        $json = '{"method":"test","method_title":"Test","transaction_id":"tid-000"}';
 
         $this->assertSame($json, $payment->toJson());
     }
@@ -43,12 +44,14 @@ class PaymentTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $order   = factory(Order::class)->create();
-        $payment = new class($order) extends Payment {
+        /** @var Order */
+        $order = Order::factory()->create();
+        $payment = new class($order) extends Payment
+        {
             public function toArray(): array
             {
                 return [
-                    fopen('php://input', 'r'),
+                    'invalid' => fopen('php://input', 'r'),
                 ];
             }
         };
@@ -58,7 +61,8 @@ class PaymentTest extends TestCase
 
     private function createPayment(): Payment
     {
-        $order = factory(Order::class)->create();
+        /** @var Order */
+        $order = Order::factory()->create();
         $order->createMeta([
             '_payment_method'       => 'test',
             '_payment_method_title' => 'Test',

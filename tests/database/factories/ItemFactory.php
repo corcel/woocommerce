@@ -1,15 +1,30 @@
 <?php
+
 declare(strict_types=1);
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use Corcel\WooCommerce\Model\Item;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Item::class, function (Faker $faker) {
-    return [
-        'order_item_name' => $faker->words(mt_rand(2, 4), true),
-        'order_item_type' => $faker->randomElement(['line_item', 'tax', 'coupon']),
-        'order_id'        => $faker->numberBetween(1, 10000),
-    ];
-});
+/**
+ * @extends Factory<Item>
+ */
+class ItemFactory extends Factory
+{
+    protected $model = Item::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition()
+    {
+        return [
+            'order_item_name' => $this->faker->words(mt_rand(2, 4), true),
+            'order_item_type' => $this->faker->randomElement(['line_item', 'tax', 'coupon']),
+            'order_id'        => $this->faker->numberBetween(1, 10000),
+        ];
+    }
+}

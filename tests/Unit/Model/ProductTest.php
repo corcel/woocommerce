@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Model;
@@ -157,12 +158,14 @@ class ProductTest extends TestCase
 
     public function testCrosssellsProperty(): void
     {
-        $crosssellProducts = factory(Product::class, 2)->create();
+        /** @var \Illuminate\Database\Eloquent\Collection<int, Product> */
+        $crosssellProducts = Product::factory()->count(2)->create();
 
         $product = $this->createProduct();
         $product->createMeta('_crosssell_ids', serialize($crosssellProducts->pluck('ID')->toArray()));
 
         $this->assertSame(2, $product->crosssells->count());
+        // @phpstan-ignore-next-line
         $this->assertTrue($product->crosssells->first()->is($crosssellProducts->first()));
     }
 
@@ -176,12 +179,14 @@ class ProductTest extends TestCase
 
     public function testUpsellsProperty(): void
     {
-        $upsellProducts = factory(Product::class, 3)->create();
+        /** @var \Illuminate\Database\Eloquent\Collection<int, Product> */
+        $upsellProducts = Product::factory()->count(3)->create();
 
         $product = $this->createProduct();
         $product->createMeta('_upsell_ids', serialize($upsellProducts->pluck('ID')->toArray()));
 
         $this->assertSame(3, $product->upsells->count());
+        // @phpstan-ignore-next-line
         $this->assertTrue($product->upsells->first()->is($upsellProducts->first()));
     }
 
@@ -197,18 +202,24 @@ class ProductTest extends TestCase
     {
         $product = $this->createProduct();
 
-        $firstItem = factory(Item::class)->create();
-        $firstItem->createMeta('_product_id', $product->ID); // @phpstan-ignore-line
+        /** @var Item */
+        $firstItem = Item::factory()->create();
+        $firstItem->createMeta('_product_id', $product->ID);
 
-        $secondItem = factory(Item::class)->create();
-        $secondItem->createMeta('_product_id', $product->ID); // @phpstan-ignore-line
+        /** @var Item */
+        $secondItem = Item::factory()->create();
+        $secondItem->createMeta('_product_id', $product->ID);
 
         $this->assertSame(2, $product->items->count());
+        // @phpstan-ignore-next-line
         $this->assertTrue($product->items->first()->is($firstItem));
     }
 
     private function createProduct(): Product
     {
-        return factory(Product::class)->create();
+        /** @var Product */
+        $product = Product::factory()->create();
+
+        return $product;
     }
 }

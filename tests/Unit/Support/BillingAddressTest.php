@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Support;
@@ -113,7 +114,8 @@ class BillingAddressTest extends TestCase
 
     private function createOrderBillingAddress(): BillingAddress
     {
-        $order = factory(Order::class)->create();
+        /** @var Order */
+        $order = Order::factory()->create();
         $order->createMeta(self::ORDER_META_FIELDS);
 
         return new BillingAddress($order);
@@ -121,7 +123,8 @@ class BillingAddressTest extends TestCase
 
     private function createCustomerBillingAddress(): BillingAddress
     {
-        $customer = factory(Customer::class)->create();
+        /** @var Customer */
+        $customer = Customer::factory()->create();
         $customer->createMeta(self::CUSTOMER_META_FIELDS);
 
         return new BillingAddress($customer);

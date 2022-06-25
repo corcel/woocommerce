@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Traits;
@@ -16,9 +17,16 @@ class HasRelationsThroughMetaTest extends TestCase
     {
         $this->expectException(LogicException::class);
 
-        $model = new class() extends Model {
+        $model = new class() extends Model
+        {
+            /**
+             * @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model>
+             */
             use HasRelationsThroughMeta;
 
+            /**
+             * @return HasMany<\Illuminate\Database\Eloquent\Model>
+             */
             public function relatedObjects(): HasMany
             {
                 return $this->hasManyThroughMeta(Model::class, '_meta_key', 'foreign_key', 'local_key');
@@ -32,7 +40,11 @@ class HasRelationsThroughMetaTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $model = new class() extends Model {
+        $model = new class() extends Model
+        {
+            /**
+             * @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model>
+             */
             use HasRelationsThroughMeta;
 
             /** @var \Corcel\Model */
@@ -43,13 +55,20 @@ class HasRelationsThroughMetaTest extends TestCase
                 $this->relatedModel = $relatedModel;
             }
 
+            /**
+             * @return HasMany<\Illuminate\Database\Eloquent\Model>
+             */
             public function relatedObjects(): HasMany
             {
                 return $this->hasManyThroughMeta(get_class($this->relatedModel), '_meta_key', 'foreign_key', 'local_key');
             }
         };
 
-        $model->setRelatedModel(new class() extends Model {
+        $model->setRelatedModel(new class() extends Model
+        {
+            /**
+             * @return HasMany<\Corcel\Model>
+             */
             public function meta(): HasMany
             {
                 return $this->hasMany(Model::class);

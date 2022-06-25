@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Support;
@@ -8,6 +9,9 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use InvalidArgumentException;
 
+/**
+ * @implements Arrayable<string, mixed>
+ */
 class Payment implements Arrayable, Jsonable
 {
     /**
@@ -15,38 +19,42 @@ class Payment implements Arrayable, Jsonable
      *
      * @var  string|null
      */
-    public $method;
+    public ?string $method = null;
 
     /**
      * The payment method title.
      *
      * @var  string|null
      */
-    public $method_title;
+    public ?string $method_title = null;
 
     /**
      * The payment transation identificator.
      *
      * @var  string|null
      */
-    public $transaction_id;
+    public ?string $transaction_id = null;
 
     /**
      * The payment constructor.
      *
-     * @param  \Corcel\WooCommerce\Model\Order  $order
+     * @param  Order  $order
      */
     public function __construct(Order $order)
     {
-        $this->method         = $order->getMeta('_payment_method');
-        $this->method_title   = $order->getMeta('_payment_method_title');
-        $this->transaction_id = $order->getMeta('_transaction_id');
+        $method = $order->getMeta('_payment_method');
+        $methodTitle = $order->getMeta('_payment_method_title');
+        $transactionId = $order->getMeta('_transaction_id');
+
+        $this->method = is_scalar($method) ? (string) $method : null;
+        $this->method_title = is_scalar($methodTitle) ? (string) $methodTitle : null;
+        $this->transaction_id = is_scalar($transactionId) ? (string) $transactionId : null;
     }
 
     /**
      * @inheritDoc
      *
-     * @return  mixed[]
+     * @return  array<string, mixed>
      */
     public function toArray(): array
     {
@@ -60,7 +68,7 @@ class Payment implements Arrayable, Jsonable
     /**
      * @inheritDoc
      *
-     * @param   int     $options
+     * @param  int  $options
      * @return  string
      */
     public function toJson($options = 0): string
