@@ -49,7 +49,7 @@ class ProductAttribute extends Model
     /**
      * @inheritDoc
      *
-     * @var  string[]
+     * @var  array<string, string>
      */
     protected $casts = [
         'attribute_public' => 'bool',

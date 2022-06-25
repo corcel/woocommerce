@@ -12,6 +12,9 @@ use Illuminate\Database\Query\JoinClause;
 use InvalidArgumentException;
 use LogicException;
 
+/**
+ * @template TRelatedModel of Model
+ */
 trait HasRelationsThroughMeta
 {
     /**
@@ -21,7 +24,7 @@ trait HasRelationsThroughMeta
      * @param   string       $metaKey
      * @param   string|null  $foreignKey
      * @param   string|null  $localKey
-     * @return  HasMany
+     * @return  HasMany<TRelatedModel>
      * @throws  InvalidArgumentException
      * @throws  LogicException
      */

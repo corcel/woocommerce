@@ -44,6 +44,9 @@ class Product extends Post
 {
     use Aliases;
     use MetaFields;
+    /**
+     * @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model>
+     */
     use HasRelationsThroughMeta;
 
     /**
@@ -387,7 +390,7 @@ class Product extends Post
     /**
      * Get the related items.
      *
-     * @return  HasMany<Item>
+     * @return  HasMany<\Illuminate\Database\Eloquent\Model>
      */
     public function items(): HasMany
     {

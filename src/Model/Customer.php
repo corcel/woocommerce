@@ -15,6 +15,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Customer extends User
 {
     use AddressesTrait;
+    /**
+     * @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model>
+     */
     use HasRelationsThroughMeta;
 
     /**
@@ -41,7 +44,7 @@ class Customer extends User
     /**
      * Get the related orders.
      *
-     * @return  HasMany<Order>
+     * @return  HasMany<\Illuminate\Database\Eloquent\Model>
      */
     public function orders(): HasMany
     {
