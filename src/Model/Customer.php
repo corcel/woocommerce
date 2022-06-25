@@ -6,6 +6,8 @@ namespace Corcel\WooCommerce\Model;
 use Corcel\Model\User;
 use Corcel\WooCommerce\Traits\AddressesTrait;
 use Corcel\WooCommerce\Traits\HasRelationsThroughMeta;
+use Database\Factories\CustomerFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -14,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Customer extends User
 {
+    use HasFactory;
     use AddressesTrait;
     /**
      * @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model>
@@ -28,6 +31,16 @@ class Customer extends User
     protected $appends = [
         'order_count',
     ];
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return CustomerFactory
+     */
+    protected static function newFactory(): CustomerFactory
+    {
+        return CustomerFactory::new();
+    }
 
     /**
      * Get order count attribute.

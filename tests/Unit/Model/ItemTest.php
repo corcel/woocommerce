@@ -61,7 +61,7 @@ class ItemTest extends TestCase
     public function testRelatedOrder(): void
     {
         /** @var Order */
-        $order = factory(Order::class)->create();
+        $order = Order::factory()->create();
         $item  = $this->createItem(['order_id' => $order->ID]);
 
         $this->assertTrue($item->order->is($order));
@@ -70,7 +70,7 @@ class ItemTest extends TestCase
     public function testRelatedProduct(): void
     {
         /** @var \Corcel\WooCommerce\Model\Product */
-        $product = factory(Product::class)->create();
+        $product = Product::factory()->create();
 
         $item = $this->createItem();
         $item->createMeta('_product_id', $product->ID);
@@ -84,7 +84,7 @@ class ItemTest extends TestCase
     private function createItem(array $attributes = []): Item
     {
         /** @var Item */
-        $item = factory(Item::class)->create($attributes);
+        $item = Item::factory()->create($attributes);
 
         return $item;
     }

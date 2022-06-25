@@ -22,7 +22,7 @@ class TestCase extends BaseTestCase
             '--path'     => __DIR__ . '/database/migrations',
         ]);
 
-        $this->withFactories(__DIR__ . '/database/factories');
+        // $this->withFactories(__DIR__ . '/database/factories');
     }
 
     /**

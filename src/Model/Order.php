@@ -10,7 +10,9 @@ use Corcel\Model\Post;
 use Corcel\WooCommerce\Model\Builder\OrderBuilder;
 use Corcel\WooCommerce\Support\Payment;
 use Corcel\WooCommerce\Traits\AddressesTrait;
+use Database\Factories\OrderFactory;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -30,6 +32,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Order extends Post
 {
+    use HasFactory;
     use Aliases;
     use AddressesTrait;
     use MetaFields;
@@ -66,6 +69,16 @@ class Order extends Post
      * @var  string
      */
     protected $postType = 'shop_order';
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return OrderFactory
+     */
+    protected static function newFactory(): OrderFactory
+    {
+        return OrderFactory::new();
+    }
 
     /**
      * @inheritDoc

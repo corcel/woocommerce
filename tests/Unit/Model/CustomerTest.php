@@ -31,13 +31,13 @@ class CustomerTest extends TestCase
         $customer = $this->createCustomer();
 
         /** @var Order */
-        $order = factory(Order::class)->create();
+        $order = Order::factory()->create();
         $order->createMeta('_customer_user', $customer->ID);
 
         $this->assertTrue($customer->orders()->get()->first()->is($order)); // @phpstan-ignore-line
 
         /** @var Order */
-        $order = factory(Order::class)->create();
+        $order = Order::factory()->create();
         $order->createMeta('_customer_user', $customer->ID);
 
         $this->assertSame(2, $customer->orders()->count()); // @phpstan-ignore-line
@@ -46,8 +46,6 @@ class CustomerTest extends TestCase
     private function createCustomer(): Customer
     {
         /** @var Customer */
-        $customer = factory(Customer::class)->create();
-
-        return $customer;
+        return Customer::factory()->create();
     }
 }

@@ -118,7 +118,7 @@ class OrderTest extends TestCase
     public function testArrayHasAppendedValues(): void
     {
         /** @var Order */
-        $order = factory(Order::class)->create();
+        $order = Order::factory()->create();
         $array = $order->toArray();
 
         $this->assertArrayHasKey('currency', $array);
@@ -137,7 +137,7 @@ class OrderTest extends TestCase
     public function testRelatedCustomer(): void
     {
         /** @var Customer */
-        $customer = factory(Customer::class)->create();
+        $customer = Customer::factory()->create();
 
         $order = $this->createOrder();
         $order->createMeta('_customer_user', $customer->ID);
@@ -159,7 +159,7 @@ class OrderTest extends TestCase
     {
         $order = $this->createOrder();
 
-        $item = factory(Item::class, 3)->create(['order_id' => $order->ID]);
+        $item = Item::factory()->count(3)->create(['order_id' => $order->ID]);
 
         $this->assertSame(3, $order->items->count());
     }
@@ -170,7 +170,7 @@ class OrderTest extends TestCase
     private function createOrder(array $attributes = []): Order
     {
         /** @var Order */
-        $order = factory(Order::class)->create($attributes);
+        $order = Order::factory()->create($attributes);
 
         return $order;
     }

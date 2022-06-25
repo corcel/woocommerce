@@ -16,7 +16,7 @@ class AddressTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         /** @var Item */
-        $model = factory(Item::class)->create();
+        $model = Item::factory()->create();
 
         new Address($model, 'billing');
     }
@@ -26,7 +26,7 @@ class AddressTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         /** @var Order */
-        $order   = factory(Order::class)->create();
+        $order   = Order::factory()->create();
         $address = new class($order, 'billing') extends Address {
             public function toArray(): array
             {

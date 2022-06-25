@@ -7,6 +7,8 @@ use Corcel\Concerns\Aliases;
 use Corcel\Concerns\MetaFields;
 use Corcel\Model;
 use Corcel\WooCommerce\Model\Meta\ItemMeta;
+use Database\Factories\ItemFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -31,6 +33,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Item extends Model
 {
+    use HasFactory;
     use Aliases;
     use MetaFields;
 
@@ -81,6 +84,16 @@ class Item extends Model
      * @var  bool
      */
     public $timestamps = false;
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return ItemFactory
+     */
+    protected static function newFactory(): ItemFactory
+    {
+        return ItemFactory::new();
+    }
 
     /**
      * Get the line subtotal attribute.

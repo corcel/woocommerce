@@ -44,7 +44,7 @@ class PaymentTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         /** @var Order */
-        $order   = factory(Order::class)->create();
+        $order   = Order::factory()->create();
         $payment = new class($order) extends Payment {
             public function toArray(): array
             {
@@ -60,7 +60,7 @@ class PaymentTest extends TestCase
     private function createPayment(): Payment
     {
         /** @var Order */
-        $order = factory(Order::class)->create();
+        $order = Order::factory()->create();
         $order->createMeta([
             '_payment_method'       => 'test',
             '_payment_method_title' => 'Test',

@@ -8,7 +8,9 @@ use Corcel\Concerns\MetaFields;
 use Corcel\Model\Attachment;
 use Corcel\Model\Post;
 use Corcel\WooCommerce\Traits\HasRelationsThroughMeta;
+use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection as BaseCollection;
@@ -42,6 +44,7 @@ use Illuminate\Support\Str;
  */
 class Product extends Post
 {
+    use HasFactory;
     use Aliases;
     use MetaFields;
     /**
@@ -93,6 +96,16 @@ class Product extends Post
         parent::boot();
 
         static::$productAttributes = ProductAttribute::all()->keyBy('attribute_name');
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return ProductFactory
+     */
+    protected static function newFactory(): ProductFactory
+    {
+        return ProductFactory::new();
     }
 
     /**

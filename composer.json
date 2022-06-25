@@ -21,7 +21,6 @@
         "orchestra/testbench": "^7.0",
         "phpstan/phpstan": "^1.0",
         "phpunit/phpunit": "^9.4",
-        "laravel/legacy-factories": "^1.0",
         "nunomaduro/larastan": "^2.0"
     },
     "autoload": {
@@ -31,7 +30,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "Database\\Factories\\": "tests/database/factories/"
         }
     }
 }

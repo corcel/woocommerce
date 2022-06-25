@@ -158,7 +158,7 @@ class ProductTest extends TestCase
     public function testCrosssellsProperty(): void
     {
         /** @var \Illuminate\Database\Eloquent\Collection<int, Product> */
-        $crosssellProducts = factory(Product::class, 2)->create();
+        $crosssellProducts = Product::factory()->count(2)->create();
 
         $product = $this->createProduct();
         $product->createMeta('_crosssell_ids', serialize($crosssellProducts->pluck('ID')->toArray()));
@@ -179,7 +179,7 @@ class ProductTest extends TestCase
     public function testUpsellsProperty(): void
     {
         /** @var \Illuminate\Database\Eloquent\Collection<int, Product> */
-        $upsellProducts = factory(Product::class, 3)->create();
+        $upsellProducts = Product::factory()->count(3)->create();
 
         $product = $this->createProduct();
         $product->createMeta('_upsell_ids', serialize($upsellProducts->pluck('ID')->toArray()));
@@ -202,11 +202,11 @@ class ProductTest extends TestCase
         $product = $this->createProduct();
 
         /** @var Item */
-        $firstItem = factory(Item::class)->create();
+        $firstItem = Item::factory()->create();
         $firstItem->createMeta('_product_id', $product->ID);
 
         /** @var Item */
-        $secondItem = factory(Item::class)->create();
+        $secondItem = Item::factory()->create();
         $secondItem->createMeta('_product_id', $product->ID);
 
         $this->assertSame(2, $product->items->count());
@@ -217,7 +217,7 @@ class ProductTest extends TestCase
     private function createProduct(): Product
     {
         /** @var Product */
-        $product = factory(Product::class)->create();
+        $product = Product::factory()->create();
 
         return $product;
     }
