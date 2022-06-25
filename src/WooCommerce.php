@@ -17,9 +17,9 @@ class WooCommerce
     /**
      * Get the shop currency.
      *
-     * @return  string
+     * @return  string|null
      */
-    public static function currency(): string
+    public static function currency(): ?string
     {
         if (self::$currency === null) {
             self::$currency = Option::get('woocommerce_currency');
