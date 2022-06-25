@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Traits;
@@ -16,7 +17,8 @@ class HasRelationsThroughMetaTest extends TestCase
     {
         $this->expectException(LogicException::class);
 
-        $model = new class() extends Model {
+        $model = new class() extends Model
+        {
             /**
              * @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model>
              */
@@ -38,7 +40,8 @@ class HasRelationsThroughMetaTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $model = new class() extends Model {
+        $model = new class() extends Model
+        {
             /**
              * @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model>
              */
@@ -61,7 +64,8 @@ class HasRelationsThroughMetaTest extends TestCase
             }
         };
 
-        $model->setRelatedModel(new class() extends Model {
+        $model->setRelatedModel(new class() extends Model
+        {
             /**
              * @return HasMany<\Corcel\Model>
              */

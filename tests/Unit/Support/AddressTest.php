@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Support;
@@ -26,8 +27,9 @@ class AddressTest extends TestCase
         $this->expectException(InvalidArgumentException::class);
 
         /** @var Order */
-        $order   = Order::factory()->create();
-        $address = new class($order, 'billing') extends Address {
+        $order = Order::factory()->create();
+        $address = new class($order, 'billing') extends Address
+        {
             public function toArray(): array
             {
                 return [

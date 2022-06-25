@@ -1,8 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Database\Factories;
- 
+
 use Corcel\WooCommerce\Model\Order;
 use DateTimeImmutable;
 use DateTimeZone;
@@ -58,9 +59,8 @@ class OrderFactory extends Factory
      */
     public function pending(): Factory
     {
-        return $this->state(fn() => ['post_status' => 'wc-pending']);
+        return $this->state(fn () => ['post_status' => 'wc-pending']);
     }
-
 
     /**
      * Applies cancelling state to model.
@@ -69,7 +69,7 @@ class OrderFactory extends Factory
      */
     public function cancelled(): Factory
     {
-        return $this->state(fn() => ['post_status' => 'wc-cancelled']);
+        return $this->state(fn () => ['post_status' => 'wc-cancelled']);
     }
 
     /**
@@ -79,7 +79,7 @@ class OrderFactory extends Factory
      */
     public function refunded(): Factory
     {
-        return $this->state(fn() => ['post_status' => 'wc-refunded']);
+        return $this->state(fn () => ['post_status' => 'wc-refunded']);
     }
 
     /**
@@ -89,7 +89,7 @@ class OrderFactory extends Factory
      */
     public function withMeta(): Factory
     {
-        return $this->afterCreating(function(Order $order) {
+        return $this->afterCreating(function (Order $order) {
             $order->createMeta([
                 '_order_currency'     => $this->faker->currencyCode,
                 '_order_total'        => $this->faker->randomFloat(2, 0, 200),
@@ -117,7 +117,7 @@ class OrderFactory extends Factory
      */
     public function withShipping(): Factory
     {
-        return $this->afterCreating(function(Order $order) {
+        return $this->afterCreating(function (Order $order) {
             $order->createMeta([
                 '_order_shipping'      => $this->faker->randomFloat(2, 0, 200),
                 '_order_shipping_tax'  => $this->faker->randomFloat(2, 0, 200),
@@ -141,7 +141,7 @@ class OrderFactory extends Factory
      */
     public function paid(): Factory
     {
-        return $this->afterCreating(function(Order $order) {
+        return $this->afterCreating(function (Order $order) {
             $paymentMethod = $this->faker->word;
 
             $order->createMeta([

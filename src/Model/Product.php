@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Model;
@@ -47,6 +48,7 @@ class Product extends Post
     use HasFactory;
     use Aliases;
     use MetaFields;
+
     /**
      * @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model>
      */
@@ -151,7 +153,7 @@ class Product extends Post
      */
     protected function getOnSaleAttribute(): bool
     {
-        return !empty($this->sale_price) && $this->sale_price < $this->regular_price;
+        return ! empty($this->sale_price) && $this->sale_price < $this->regular_price;
     }
 
     /**
@@ -312,7 +314,7 @@ class Product extends Post
     {
         $crosssells = $this->getMeta('_crosssell_ids');
 
-        if (!is_string($crosssells)) {
+        if (! is_string($crosssells)) {
             return static::newCollection();
         }
 
@@ -334,7 +336,7 @@ class Product extends Post
     {
         $upsells = $this->getMeta('_upsell_ids');
 
-        if (!is_string($upsells)) {
+        if (! is_string($upsells)) {
             return static::newCollection();
         }
 
@@ -362,12 +364,12 @@ class Product extends Post
 
         $attachmentsId = $this->getMeta('_product_image_gallery');
 
-        if (!is_string($attachmentsId) || empty($attachmentsId)) {
+        if (! is_string($attachmentsId) || empty($attachmentsId)) {
             return $gallery;
         }
 
         $attachmentsId = explode(',', $attachmentsId);
-        $attachments   = Attachment::query()->whereIn('ID', $attachmentsId)->get();
+        $attachments = Attachment::query()->whereIn('ID', $attachmentsId)->get();
 
         return $gallery->merge($attachments);
     }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Model;
@@ -18,6 +19,7 @@ class Customer extends User
 {
     use HasFactory;
     use AddressesTrait;
+
     /**
      * @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model>
      */

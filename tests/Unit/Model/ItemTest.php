@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Model;
@@ -62,7 +63,7 @@ class ItemTest extends TestCase
     {
         /** @var Order */
         $order = Order::factory()->create();
-        $item  = $this->createItem(['order_id' => $order->ID]);
+        $item = $this->createItem(['order_id' => $order->ID]);
 
         $this->assertTrue($item->order->is($order));
     }
@@ -79,7 +80,7 @@ class ItemTest extends TestCase
     }
 
     /**
-     * @param mixed[]  $attributes
+     * @param  mixed[]  $attributes
      */
     private function createItem(array $attributes = []): Item
     {

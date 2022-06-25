@@ -1,8 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Database\Factories;
- 
+
 use Corcel\WooCommerce\Model\Product;
 use DateTimeImmutable;
 use DateTimeZone;

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\Model;
@@ -165,7 +166,7 @@ class OrderTest extends TestCase
     }
 
     /**
-     * @param mixed[]  $attributes
+     * @param  mixed[]  $attributes
      */
     private function createOrder(array $attributes = []): Order
     {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Traits;
@@ -20,11 +21,12 @@ trait HasRelationsThroughMeta
     /**
      * Define a one-to-many relation through meta.
      *
-     * @param   string       $related
-     * @param   string       $metaKey
-     * @param   string|null  $foreignKey
-     * @param   string|null  $localKey
+     * @param  string  $related
+     * @param  string  $metaKey
+     * @param  string|null  $foreignKey
+     * @param  string|null  $localKey
      * @return  HasMany<TRelatedModel>
+     *
      * @throws  InvalidArgumentException
      * @throws  LogicException
      */
@@ -32,10 +34,10 @@ trait HasRelationsThroughMeta
     {
         /** @var Model */
         $model = $this->newRelatedInstance($related);
-        $meta  = $this->metaInstance($model);
+        $meta = $this->metaInstance($model);
 
         $foreignKey = $foreignKey ?: $this->getForeignKey();
-        $localKey   = $localKey ?: $this->getKeyName();
+        $localKey = $localKey ?: $this->getKeyName();
 
         return $this->hasMany($related, $meta->qualifyColumn('meta_value'))
             ->leftJoin($meta->getTable(), $this->joinClause(
@@ -49,14 +51,15 @@ trait HasRelationsThroughMeta
     /**
      * Make meta model instance.
      *
-     * @param   \Illuminate\Database\Eloquent\Model  $model
+     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return  \Corcel\Model\Meta\Meta
+     *
      * @throws  InvalidArgumentException
      * @throws  LogicException
      */
     private function metaInstance(Model $model): Meta
     {
-        if (!method_exists($model, 'meta')) {
+        if (! method_exists($model, 'meta')) {
             throw new LogicException(sprintf(
                 'The model "%s" must have defined "meta" method. Adding "%s" trait will likely solve this problem.',
                 get_class($model),
@@ -66,7 +69,7 @@ trait HasRelationsThroughMeta
 
         $meta = $model->meta()->getRelated();
 
-        if (!$meta instanceof Meta) {
+        if (! $meta instanceof Meta) {
             throw new InvalidArgumentException(sprintf(
                 'The meta method of "%s" model must extends "%s" model.',
                 get_class($meta),
@@ -80,9 +83,9 @@ trait HasRelationsThroughMeta
     /**
      * Build join clause between model and meta tables.
      *
-     * @param   string  $localKey
-     * @param   string  $foreignKey
-     * @param   string  $metaKey
+     * @param  string  $localKey
+     * @param  string  $foreignKey
+     * @param  string  $metaKey
      * @return  Closure
      */
     private function joinClause(string $localKey, string $foreignKey, string $metaKey): Closure

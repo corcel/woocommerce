@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Support;
@@ -39,13 +40,13 @@ class Address implements Arrayable, Jsonable
     /**
      * The address constructor.
      *
-     * @param  Model   $model
+     * @param  Model  $model
      * @param  string  $type
      */
     public function __construct(Model $model, string $type)
     {
         $this->model = $model;
-        $this->type  = $type;
+        $this->type = $type;
 
         $this->parseAttributes();
     }
@@ -97,7 +98,7 @@ class Address implements Arrayable, Jsonable
     /**
      * Get meta key for given attribute name.
      *
-     * @param   string  $key
+     * @param  string  $key
      * @return  string
      */
     protected function getMetaKey(string $key): string
@@ -139,7 +140,7 @@ class Address implements Arrayable, Jsonable
     /**
      * @inheritDoc
      *
-     * @param   int     $options
+     * @param  int  $options
      * @return  string
      */
     public function toJson($options = 0): string
@@ -156,7 +157,7 @@ class Address implements Arrayable, Jsonable
     /**
      * Magic method to get address attributes.
      *
-     * @param   string  $key
+     * @param  string  $key
      * @return  mixed
      */
     public function __get(string $key)

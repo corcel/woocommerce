@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Corcel\WooCommerce\Support;
@@ -42,11 +43,11 @@ class Payment implements Arrayable, Jsonable
     public function __construct(Order $order)
     {
         $method = $order->getMeta('_payment_method');
-        $methodTitle   = $order->getMeta('_payment_method_title');
+        $methodTitle = $order->getMeta('_payment_method_title');
         $transactionId = $order->getMeta('_transaction_id');
 
-        $this->method         = is_scalar($method) ? (string) $method : null;
-        $this->method_title   = is_scalar($methodTitle) ? (string) $methodTitle : null;
+        $this->method = is_scalar($method) ? (string) $method : null;
+        $this->method_title = is_scalar($methodTitle) ? (string) $methodTitle : null;
         $this->transaction_id = is_scalar($transactionId) ? (string) $transactionId : null;
     }
 
@@ -67,7 +68,7 @@ class Payment implements Arrayable, Jsonable
     /**
      * @inheritDoc
      *
-     * @param   int     $options
+     * @param  int  $options
      * @return  string
      */
     public function toJson($options = 0): string
