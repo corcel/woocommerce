@@ -1,5 +1,9 @@
 # WooCommerce Corcel Plugin changelog
 
+## v2.1.1 - 2022-06-25
+
+* Fix WooCommerce::currency() method return type (#30)
+
 ## v2.1.0 - 2021-10-21
 
 * PHP 8.0 support (c95576e)
