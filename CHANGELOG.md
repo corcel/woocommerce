@@ -1,5 +1,9 @@
 # WooCommerce Corcel Plugin changelog
 
+## v3.0.0 - 2022-06-25
+
+* Laravel 9 support (#29)
+
 ## v2.1.1 - 2022-06-25
 
 * Fix WooCommerce::currency() method return type (#30)
