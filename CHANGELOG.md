@@ -1,5 +1,9 @@
 # WooCommerce Corcel Plugin changelog
 
+## v4.0.0 - 2023-06-12
+
+* Laravel 10 support (#35)
+
 ## v3.0.0 - 2022-06-25
 
 * Laravel 9 support (#29)
