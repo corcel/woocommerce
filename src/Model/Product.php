@@ -324,6 +324,7 @@ class Product extends Post
             return static::newCollection();
         }
 
+        /** @var Collection<int, Product> */
         return static::query()->whereIn('ID', $crosssells)->get();
     }
 
@@ -346,6 +347,7 @@ class Product extends Post
             return static::newCollection();
         }
 
+        /** @var Collection<int, Product> */
         return static::query()->whereIn('ID', $upsells)->get();
     }
 
