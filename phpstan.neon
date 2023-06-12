@@ -17,6 +17,3 @@ parameters:
         -
             message: '#Access to an undefined property Faker\\Generator::\$[a-zA-Z]+?\.#'
             path: tests/*
-        -
-            message: '#Call to private method whereIn\(\) of parent class Illuminate\\Database\\Eloquent\\Builder<Illuminate\\Database\\Eloquent\\Model>.#'
-            path: src/Model/Product.php
