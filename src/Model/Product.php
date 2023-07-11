@@ -450,7 +450,7 @@ class Product extends Post
     }
 
     /**
-     * Get the related tags.
+     * Get the related vendors.
      *
      * @return BelongsToMany<Vendor>
      */
