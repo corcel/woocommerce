@@ -105,7 +105,7 @@ class Product extends Post
      *
      * @return ProductFactory
      */
-    protected static function newFactory(): ProductFactory
+    protected static function newFactory()
     {
         return ProductFactory::new();
     }
