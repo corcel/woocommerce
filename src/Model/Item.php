@@ -54,7 +54,7 @@ class Item extends Model
     /**
      * @inheritDoc
      *
-     * @var  array<string>
+     * @var  array<int, string>
      */
     protected $appends = [
         'quantity',
