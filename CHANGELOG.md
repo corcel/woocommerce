@@ -1,5 +1,10 @@
 # WooCommerce Corcel Plugin changelog
 
+## v5.0.0 - 2024-05-15
+
+* Laravel 11 support (#37, #40)
+* Add flexibility to inherit the models and define and update the model factories (#38, #39)
+
 ## v4.0.0 - 2023-06-12
 
 * Laravel 10 support (#35)
