@@ -39,7 +39,7 @@ class Customer extends User
      *
      * @return CustomerFactory
      */
-    protected static function newFactory(): CustomerFactory
+    protected static function newFactory()
     {
         return CustomerFactory::new();
     }

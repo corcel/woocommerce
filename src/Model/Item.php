@@ -91,7 +91,7 @@ class Item extends Model
      *
      * @return ItemFactory
      */
-    protected static function newFactory(): ItemFactory
+    protected static function newFactory()
     {
         return ItemFactory::new();
     }

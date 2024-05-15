@@ -76,7 +76,7 @@ class Order extends Post
      *
      * @return OrderFactory
      */
-    protected static function newFactory(): OrderFactory
+    protected static function newFactory()
     {
         return OrderFactory::new();
     }
