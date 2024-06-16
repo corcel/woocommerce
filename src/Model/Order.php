@@ -18,39 +18,39 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property int|null       $customer_id
- * @property string|null    $currency
- * @property string|null    $total
- * @property string|null    $shipping
- * @property string|null    $tax
- * @property string|null    $shipping_tax
- * @property string         $status
- * @property Carbon|null    $date_completed
- * @property Carbon|null    $date_paid
- * @property Payment        $payment
- * @property Customer|null  $customer
- * @property Collection     $items
+ * @property int|null $customer_id
+ * @property string|null $currency
+ * @property string|null $total
+ * @property string|null $shipping
+ * @property string|null $tax
+ * @property string|null $shipping_tax
+ * @property string $status
+ * @property Carbon|null $date_completed
+ * @property Carbon|null $date_paid
+ * @property Payment $payment
+ * @property Customer|null $customer
+ * @property Collection $items
  */
 class Order extends Post
 {
-    use HasFactory;
-    use Aliases;
     use AddressesTrait;
+    use Aliases;
+    use HasFactory;
     use MetaFields;
 
     /**
      * The model aliases.
      *
-     * @var  array<string, array<string, string>>
+     * @var array<string, array<string, string>>
      */
     protected static $aliases = [
         'customer_id' => ['meta' => '_customer_user'],
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
-     * @var  array<string>
+     * @var array<string>
      */
     protected $appends = [
         'currency',
@@ -67,7 +67,7 @@ class Order extends Post
     /**
      * The post type slug.
      *
-     * @var  string
+     * @var string
      */
     protected $postType = 'shop_order';
 
@@ -82,7 +82,7 @@ class Order extends Post
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function newEloquentBuilder($builder): OrderBuilder
     {
@@ -91,8 +91,6 @@ class Order extends Post
 
     /**
      * Get the currency attribute.
-     *
-     * @return  string|null
      */
     protected function getCurrencyAttribute(): ?string
     {
@@ -103,8 +101,6 @@ class Order extends Post
 
     /**
      * Get the total attribute.
-     *
-     * @return  string|null
      */
     protected function getTotalAttribute(): ?string
     {
@@ -115,8 +111,6 @@ class Order extends Post
 
     /**
      * Get the shipping attribute.
-     *
-     * @return  string|null
      */
     protected function getShippingAttribute(): ?string
     {
@@ -127,8 +121,6 @@ class Order extends Post
 
     /**
      * Get the tax attribute.
-     *
-     * @return  string|null
      */
     protected function getTaxAttribute(): ?string
     {
@@ -139,8 +131,6 @@ class Order extends Post
 
     /**
      * Get the shipping tax attribute.
-     *
-     * @return  string|null
      */
     protected function getShippingTaxAttribute(): ?string
     {
@@ -151,20 +141,16 @@ class Order extends Post
 
     /**
      * Get the status attribute.
-     *
-     * @return  string
      */
     public function getStatusAttribute(): string
     {
         $status = $this->post_status; // @phpstan-ignore-line
 
-        return 'wc-' === substr($status, 0, 3) ? substr($status, 3) : $status;
+        return substr($status, 0, 3) === 'wc-' ? substr($status, 3) : $status;
     }
 
     /**
      * Get the completed date attribute.
-     *
-     * @return Carbon|null
      */
     protected function getDateCompletedAttribute(): ?Carbon
     {
@@ -180,19 +166,13 @@ class Order extends Post
          */
         $value = $this->getMeta('_completed_date');
 
-        if (is_string($value)) {
-            $datetime = Carbon::createFromFormat('Y-m-d H:i:s', $value);
-
-            return $datetime !== false ? $datetime : null;
-        }
-
-        return null;
+        return is_string($value)
+            ? Carbon::createFromFormat('Y-m-d H:i:s', $value)
+            : null;
     }
 
     /**
      * Get the paid date attribute.
-     *
-     * @return Carbon|null
      */
     public function getDatePaidAttribute(): ?Carbon
     {
@@ -208,19 +188,13 @@ class Order extends Post
          */
         $value = $this->getMeta('_paid_date');
 
-        if (is_string($value)) {
-            $datetime = Carbon::createFromFormat('Y-m-d H:i:s', $value);
-
-            return $datetime !== false ? $datetime : null;
-        }
-
-        return null;
+        return is_string($value)
+            ? Carbon::createFromFormat('Y-m-d H:i:s', $value)
+            : null;
     }
 
     /**
      * Get the payment attribute.
-     *
-     * @return Payment
      */
     public function getPaymentAttribute(): Payment
     {
@@ -240,7 +214,7 @@ class Order extends Post
     /**
      * Get related items.
      *
-     * @return  HasMany<Item>
+     * @return HasMany<Item>
      */
     public function items(): HasMany
     {

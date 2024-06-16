@@ -18,53 +18,53 @@ use Illuminate\Support\Collection as BaseCollection;
 use Illuminate\Support\Str;
 
 /**
- * @property string|null              $price
- * @property string|null              $regular_price
- * @property string|null              $sale_price
- * @property bool                     $on_sale
- * @property string|null              $sku
- * @property string|null              $tax_status
- * @property bool                     $is_taxable
- * @property string|null              $weight
- * @property string|null              $length
- * @property string|null              $width
- * @property string|null              $height
- * @property bool                     $is_virtual
- * @property bool                     $is_downloadable
- * @property string|null              $stock
- * @property bool                     $in_stock
- * @property string|null              $type
- * @property BaseCollection           $attributes
- * @property Collection<Product>      $crosssells
- * @property Collection               $upsells
- * @property BaseCollection           $gallery
- * @property Collection               $categories
- * @property Collection               $items
- * @property Collection<ProductType>  $productTypes
- * @property Collection               $tags
+ * @property string|null $price
+ * @property string|null $regular_price
+ * @property string|null $sale_price
+ * @property bool $on_sale
+ * @property string|null $sku
+ * @property string|null $tax_status
+ * @property bool $is_taxable
+ * @property string|null $weight
+ * @property string|null $length
+ * @property string|null $width
+ * @property string|null $height
+ * @property bool $is_virtual
+ * @property bool $is_downloadable
+ * @property string|null $stock
+ * @property bool $in_stock
+ * @property string|null $type
+ * @property BaseCollection $attributes
+ * @property Collection<Product> $crosssells
+ * @property Collection $upsells
+ * @property BaseCollection $gallery
+ * @property Collection $categories
+ * @property Collection $items
+ * @property Collection<ProductType> $productTypes
+ * @property Collection $tags
  */
 class Product extends Post
 {
-    use HasFactory;
     use Aliases;
-    use MetaFields;
-
+    use HasFactory;
     /**
      * @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model>
      */
     use HasRelationsThroughMeta;
 
+    use MetaFields;
+
     /**
      * Preloaded product attributes list.
      *
-     * @var  Collection<string, ProductAttribute>
+     * @var Collection<string, ProductAttribute>
      */
     protected static $productAttributes;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
-     * @var  array<string>
+     * @var array<string>
      */
     protected $appends = [
         'price',
@@ -86,12 +86,12 @@ class Product extends Post
     /**
      * The post type of model.
      *
-     * @var  string
+     * @var string
      */
     protected $postType = 'product';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     protected static function boot()
     {
@@ -112,8 +112,6 @@ class Product extends Post
 
     /**
      * Get the price attribute.
-     *
-     * @return  string|null
      */
     protected function getPriceAttribute(): ?string
     {
@@ -124,8 +122,6 @@ class Product extends Post
 
     /**
      * Get the regular price attribute.
-     *
-     * @return  string|null
      */
     protected function getRegularPriceAttribute(): ?string
     {
@@ -136,8 +132,6 @@ class Product extends Post
 
     /**
      * Get the sale price attribute
-     *
-     * @return  string|null
      */
     protected function getSalePriceAttribute(): ?string
     {
@@ -148,8 +142,6 @@ class Product extends Post
 
     /**
      * Get the on sale attribute
-     *
-     * @return  bool
      */
     protected function getOnSaleAttribute(): bool
     {
@@ -158,8 +150,6 @@ class Product extends Post
 
     /**
      * Get the SKU attribute.
-     *
-     * @return  string|null
      */
     protected function getSkuAttribute(): ?string
     {
@@ -170,8 +160,6 @@ class Product extends Post
 
     /**
      * Get the tax status attribute.
-     *
-     * @return  string|null
      */
     protected function getTaxStatusAttribute(): ?string
     {
@@ -182,18 +170,14 @@ class Product extends Post
 
     /**
      * Get the is taxable attribute.
-     *
-     * @return  bool
      */
     public function getIsTaxableAttribute(): bool
     {
-        return 'taxable' === $this->tax_status;
+        return $this->tax_status === 'taxable';
     }
 
     /**
      * Get the weight attribute.
-     *
-     * @return  string|null
      */
     protected function getWeightAttribute(): ?string
     {
@@ -204,8 +188,6 @@ class Product extends Post
 
     /**
      * Get the length attribute.
-     *
-     * @return  string|null
      */
     protected function getLengthAttribute(): ?string
     {
@@ -216,8 +198,6 @@ class Product extends Post
 
     /**
      * Get the width attribute.
-     *
-     * @return  string|null
      */
     protected function getWidthAttribute(): ?string
     {
@@ -228,8 +208,6 @@ class Product extends Post
 
     /**
      * Get the height attribute.
-     *
-     * @return  string|null
      */
     protected function getHeightAttribute(): ?string
     {
@@ -240,28 +218,22 @@ class Product extends Post
 
     /**
      * Get the is virtual attribute.
-     *
-     * @return  bool
      */
     protected function getIsVirtualAttribute(): bool
     {
-        return 'yes' === $this->getMeta('_virtual');
+        return $this->getMeta('_virtual') === 'yes';
     }
 
     /**
      * Get the is downloadable attribute.
-     *
-     * @return  bool
      */
     protected function getIsDownloadableAttribute(): bool
     {
-        return 'yes' === $this->getMeta('_downloadable');
+        return $this->getMeta('_downloadable') === 'yes';
     }
 
     /**
      * Get the stock attribute.
-     *
-     * @return  string|null
      */
     protected function getStockAttribute(): ?string
     {
@@ -272,18 +244,16 @@ class Product extends Post
 
     /**
      * Get the in stock attribute.
-     *
-     * @return  bool
      */
     protected function getInStockAttribute(): bool
     {
-        return 'instock' === $this->getMeta('_stock_status');
+        return $this->getMeta('_stock_status') === 'instock';
     }
 
     /**
      * Get the product attributes attribute.
      *
-     * @return  BaseCollection<string, ProductAttribute>
+     * @return BaseCollection<string, ProductAttribute>
      */
     protected function getAttributesAttribute(): BaseCollection
     {
@@ -378,8 +348,6 @@ class Product extends Post
 
     /**
      * Get the type attribute.
-     *
-     * @return  string|null
      */
     protected function getTypeAttribute(): ?string
     {
@@ -392,7 +360,7 @@ class Product extends Post
     /**
      * Get the related categories.
      *
-     * @return  BelongsToMany<ProductCategory>
+     * @return BelongsToMany<ProductCategory>
      */
     public function categories(): BelongsToMany
     {
@@ -407,7 +375,7 @@ class Product extends Post
     /**
      * Get the related items.
      *
-     * @return  HasMany<\Illuminate\Database\Eloquent\Model>
+     * @return HasMany<\Illuminate\Database\Eloquent\Model>
      */
     public function items(): HasMany
     {

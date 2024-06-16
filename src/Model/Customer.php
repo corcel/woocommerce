@@ -12,13 +12,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property int         $order_count
- * @property Collection  $orders
+ * @property int $order_count
+ * @property Collection $orders
  */
 class Customer extends User
 {
-    use HasFactory;
     use AddressesTrait;
+    use HasFactory;
 
     /**
      * @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model>
@@ -26,9 +26,9 @@ class Customer extends User
     use HasRelationsThroughMeta;
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
-     * @var  array<string>
+     * @var array<string>
      */
     protected $appends = [
         'order_count',
@@ -46,8 +46,6 @@ class Customer extends User
 
     /**
      * Get order count attribute.
-     *
-     * @return  int
      */
     protected function getOrderCountAttribute(): int
     {
@@ -59,7 +57,7 @@ class Customer extends User
     /**
      * Get the related orders.
      *
-     * @return  HasMany<\Illuminate\Database\Eloquent\Model>
+     * @return HasMany<\Illuminate\Database\Eloquent\Model>
      */
     public function orders(): HasMany
     {

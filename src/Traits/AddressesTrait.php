@@ -8,15 +8,13 @@ use Corcel\WooCommerce\Support\BillingAddress;
 use Corcel\WooCommerce\Support\ShippingAddress;
 
 /**
- * @property \Corcel\WooCommerce\Support\BillingAddress  $billing_address
- * @property \Corcel\WooCommerce\Support\ShippingAddress  $shipping_address
+ * @property \Corcel\WooCommerce\Support\BillingAddress $billing_address
+ * @property \Corcel\WooCommerce\Support\ShippingAddress $shipping_address
  */
 trait AddressesTrait
 {
     /**
      * Initialize trait.
-     *
-     * @return  void
      */
     protected function initializeAddressesTrait(): void
     {
@@ -28,8 +26,6 @@ trait AddressesTrait
 
     /**
      * Get the billing address attribute.
-     *
-     * @return  \Corcel\WooCommerce\Support\BillingAddress
      */
     protected function getBillingAddressAttribute(): BillingAddress
     {
@@ -38,8 +34,6 @@ trait AddressesTrait
 
     /**
      * Get the shipping address attribute.
-     *
-     * @return  \Corcel\WooCommerce\Support\ShippingAddress
      */
     protected function getShippingAddressAttribute(): ShippingAddress
     {

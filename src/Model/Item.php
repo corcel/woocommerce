@@ -14,47 +14,47 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property int                                $id
- * @property string                             $name
- * @property string                             $type
- * @property int                                $order_item_id
- * @property string                             $order_item_name
- * @property string                             $order_item_type
- * @property int                                $order_id
- * @property string|null                        $product_id
- * @property string|null                        $variation_id
- * @property string|null                        $quantity
- * @property string|null                        $tax_class
- * @property string|null                        $line_subtotal
- * @property string|null                        $line_subtotal_tax
- * @property string|null                        $line_total
- * @property string|null                        $line_tax
- * @property \Corcel\WooCommerce\Model\Order    $order
- * @property \Corcel\WooCommerce\Model\Product  $product
+ * @property int $id
+ * @property string $name
+ * @property string $type
+ * @property int $order_item_id
+ * @property string $order_item_name
+ * @property string $order_item_type
+ * @property int $order_id
+ * @property string|null $product_id
+ * @property string|null $variation_id
+ * @property string|null $quantity
+ * @property string|null $tax_class
+ * @property string|null $line_subtotal
+ * @property string|null $line_subtotal_tax
+ * @property string|null $line_total
+ * @property string|null $line_tax
+ * @property \Corcel\WooCommerce\Model\Order $order
+ * @property \Corcel\WooCommerce\Model\Product $product
  */
 class Item extends Model
 {
-    use HasFactory;
     use Aliases;
+    use HasFactory;
     use MetaFields;
 
     /**
      * The model aliases.
      *
-     * @var  array<string, string>|array<string, array<string, string>>
+     * @var array<string, string>|array<string, array<string, string>>
      */
     protected static $aliases = [
-        'id'           => 'order_item_id',
-        'name'         => 'order_item_name',
-        'type'         => 'order_item_type',
-        'product_id'   => ['meta' => '_product_id'],
+        'id' => 'order_item_id',
+        'name' => 'order_item_name',
+        'type' => 'order_item_type',
+        'product_id' => ['meta' => '_product_id'],
         'variation_id' => ['meta' => '_variation_id'],
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
-     * @var  array<int, string>
+     * @var array<int, string>
      */
     protected $appends = [
         'quantity',
@@ -66,23 +66,23 @@ class Item extends Model
     ];
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
-     * @var  string
+     * @var string
      */
     protected $table = 'woocommerce_order_items';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
-     * @var  string
+     * @var string
      */
     protected $primaryKey = 'order_item_id';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
-     * @var  bool
+     * @var bool
      */
     public $timestamps = false;
 
@@ -98,8 +98,6 @@ class Item extends Model
 
     /**
      * Get the line subtotal attribute.
-     *
-     * @return  string|null
      */
     protected function getLineSubtotalAttribute(): ?string
     {
@@ -110,8 +108,6 @@ class Item extends Model
 
     /**
      * Get the line subtotal tax attribute.
-     *
-     * @return  string|null
      */
     protected function getLineSubtotalTaxAttribute(): ?string
     {
@@ -122,8 +118,6 @@ class Item extends Model
 
     /**
      * Get the line tax attribute.
-     *
-     * @return  string|null
      */
     protected function getLineTaxAttribute(): ?string
     {
@@ -134,8 +128,6 @@ class Item extends Model
 
     /**
      * Get the line total attribute.
-     *
-     * @return  string|null
      */
     protected function getLineTotalAttribute(): ?string
     {
@@ -146,8 +138,6 @@ class Item extends Model
 
     /**
      * Get the quantity attribute.
-     *
-     * @return  string|null
      */
     protected function getQuantityAttribute(): ?string
     {
@@ -158,8 +148,6 @@ class Item extends Model
 
     /**
      * Get the tax class attribute.
-     *
-     * @return  string|null
      */
     protected function getTaxClassAttribute(): ?string
     {
@@ -169,9 +157,9 @@ class Item extends Model
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
-     * @return  HasMany<ItemMeta>
+     * @return HasMany<ItemMeta>
      */
     public function meta(): HasMany
     {
@@ -181,7 +169,7 @@ class Item extends Model
     /**
      * Get the related order.
      *
-     * @return  BelongsTo<Order, Item>
+     * @return BelongsTo<Order, Item>
      */
     public function order(): BelongsTo
     {
@@ -191,7 +179,7 @@ class Item extends Model
     /**
      * Get the related product.
      *
-     * @return  BelongsTo<Product, Item>
+     * @return BelongsTo<Product, Item>
      */
     public function product(): BelongsTo
     {

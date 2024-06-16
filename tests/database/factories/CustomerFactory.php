@@ -25,15 +25,15 @@ class CustomerFactory extends Factory
         $name = $this->faker->firstName;
 
         return [
-            'user_login'          => Str::lower(Str::ascii($name)),
-            'user_pass'           => bcrypt('secret'),
-            'user_nicename'       => $name,
-            'user_email'          => $this->faker->email,
-            'user_url'            => $this->faker->url,
-            'user_registered'     => $this->faker->dateTime,
+            'user_login' => Str::lower(Str::ascii($name)),
+            'user_pass' => bcrypt('secret'),
+            'user_nicename' => $name,
+            'user_email' => $this->faker->email,
+            'user_url' => $this->faker->url,
+            'user_registered' => $this->faker->dateTime,
             'user_activation_key' => Str::random(10),
-            'user_status'         => 0,
-            'display_name'        => $name,
+            'user_status' => 0,
+            'display_name' => $name,
         ];
     }
 }

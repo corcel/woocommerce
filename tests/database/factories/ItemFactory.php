@@ -24,7 +24,7 @@ class ItemFactory extends Factory
         return [
             'order_item_name' => $this->faker->words(mt_rand(2, 4), true),
             'order_item_type' => $this->faker->randomElement(['line_item', 'tax', 'coupon']),
-            'order_id'        => $this->faker->numberBetween(1, 10000),
+            'order_id' => $this->faker->numberBetween(1, 10000),
         ];
     }
 }

@@ -16,29 +16,21 @@ class Payment implements Arrayable, Jsonable
 {
     /**
      * The payment method.
-     *
-     * @var  string|null
      */
     public ?string $method = null;
 
     /**
      * The payment method title.
-     *
-     * @var  string|null
      */
     public ?string $method_title = null;
 
     /**
      * The payment transation identificator.
-     *
-     * @var  string|null
      */
     public ?string $transaction_id = null;
 
     /**
      * The payment constructor.
-     *
-     * @param  Order  $order
      */
     public function __construct(Order $order)
     {
@@ -52,30 +44,29 @@ class Payment implements Arrayable, Jsonable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
-     * @return  array<string, mixed>
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {
         return [
-            'method'         => $this->method,
-            'method_title'   => $this->method_title,
+            'method' => $this->method,
+            'method_title' => $this->method_title,
             'transaction_id' => $this->transaction_id,
         ];
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @param  int  $options
-     * @return  string
      */
     public function toJson($options = 0): string
     {
         $json = json_encode($this->toArray(), $options);
 
-        if ($json === false || JSON_ERROR_NONE !== json_last_error()) {
+        if ($json === false || json_last_error() !== JSON_ERROR_NONE) {
             throw new InvalidArgumentException('An error occured while converting order payment to JSON.');
         }
 

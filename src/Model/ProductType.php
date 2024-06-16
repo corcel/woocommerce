@@ -11,7 +11,7 @@ class ProductType extends Taxonomy
     /**
      * The taxonomy slug.
      *
-     * @var  string
+     * @var string
      */
     protected $taxonomy = 'product_type';
 }

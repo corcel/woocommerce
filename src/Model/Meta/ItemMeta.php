@@ -9,16 +9,16 @@ use Corcel\Model\Meta\PostMeta;
 class ItemMeta extends PostMeta
 {
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
-     * @var  string
+     * @var string
      */
     protected $table = 'woocommerce_order_itemmeta';
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
-     * @var  string[]
+     * @var string[]
      */
     protected $fillable = [
         'order_item_id',

@@ -18,30 +18,23 @@ class Address implements Arrayable, Jsonable
 {
     /**
      * The model instance.
-     *
-     * @var  Model
      */
     protected Model $model;
 
     /**
      * The address type.
-     *
-     * @var  string
      */
     protected string $type;
 
     /**
      * The address attributes.
      *
-     * @var  array<string, mixed>
+     * @var array<string, mixed>
      */
     protected array $attributes = [];
 
     /**
      * The address constructor.
-     *
-     * @param  Model  $model
-     * @param  string  $type
      */
     public function __construct(Model $model, string $type)
     {
@@ -53,8 +46,6 @@ class Address implements Arrayable, Jsonable
 
     /**
      * Parse address attributes.
-     *
-     * @return  void
      */
     protected function parseAttributes(): void
     {
@@ -69,7 +60,7 @@ class Address implements Arrayable, Jsonable
     /**
      * List of the attribute keys.
      *
-     * @return  array<string>
+     * @return array<string>
      */
     protected function attributeKeys(): array
     {
@@ -97,9 +88,6 @@ class Address implements Arrayable, Jsonable
 
     /**
      * Get meta key for given attribute name.
-     *
-     * @param  string  $key
-     * @return  string
      */
     protected function getMetaKey(string $key): string
     {
@@ -110,8 +98,6 @@ class Address implements Arrayable, Jsonable
 
     /**
      * Get meta key pattern based on model.
-     *
-     * @return  string
      */
     protected function metaKeyPattern(): string
     {
@@ -128,9 +114,9 @@ class Address implements Arrayable, Jsonable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
-     * @return  array<string, mixed>
+     * @return array<string, mixed>
      */
     public function toArray(): array
     {
@@ -138,16 +124,15 @@ class Address implements Arrayable, Jsonable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @param  int  $options
-     * @return  string
      */
     public function toJson($options = 0): string
     {
         $json = json_encode($this->toArray(), $options);
 
-        if ($json === false || JSON_ERROR_NONE !== json_last_error()) {
+        if ($json === false || json_last_error() !== JSON_ERROR_NONE) {
             throw new InvalidArgumentException('An error occured while converting order address to JSON.');
         }
 
@@ -157,8 +142,7 @@ class Address implements Arrayable, Jsonable
     /**
      * Magic method to get address attributes.
      *
-     * @param  string  $key
-     * @return  mixed
+     * @return mixed
      */
     public function __get(string $key)
     {

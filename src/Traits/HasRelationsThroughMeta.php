@@ -21,16 +21,12 @@ trait HasRelationsThroughMeta
     /**
      * Define a one-to-many relation through meta.
      *
-     * @param  string  $related
-     * @param  string  $metaKey
-     * @param  string|null  $foreignKey
-     * @param  string|null  $localKey
-     * @return  HasMany<TRelatedModel>
+     * @return HasMany<TRelatedModel>
      *
-     * @throws  InvalidArgumentException
-     * @throws  LogicException
+     * @throws InvalidArgumentException
+     * @throws LogicException
      */
-    public function hasManyThroughMeta(string $related, string $metaKey, string $foreignKey = null, string $localKey = null): HasMany
+    public function hasManyThroughMeta(string $related, string $metaKey, ?string $foreignKey = null, ?string $localKey = null): HasMany
     {
         /** @var Model */
         $model = $this->newRelatedInstance($related);
@@ -51,11 +47,9 @@ trait HasRelationsThroughMeta
     /**
      * Make meta model instance.
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
-     * @return  \Corcel\Model\Meta\Meta
      *
-     * @throws  InvalidArgumentException
-     * @throws  LogicException
+     * @throws InvalidArgumentException
+     * @throws LogicException
      */
     private function metaInstance(Model $model): Meta
     {
@@ -82,11 +76,6 @@ trait HasRelationsThroughMeta
 
     /**
      * Build join clause between model and meta tables.
-     *
-     * @param  string  $localKey
-     * @param  string  $foreignKey
-     * @param  string  $metaKey
-     * @return  Closure
      */
     private function joinClause(string $localKey, string $foreignKey, string $metaKey): Closure
     {

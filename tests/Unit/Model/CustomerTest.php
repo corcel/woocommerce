@@ -41,7 +41,7 @@ class CustomerTest extends TestCase
         $order = Order::factory()->create();
         $order->createMeta('_customer_user', $customer->ID);
 
-        $this->assertSame(2, $customer->orders()->count()); // @phpstan-ignore-line
+        $this->assertSame(2, $customer->orders()->count());
     }
 
     private function createCustomer(): Customer

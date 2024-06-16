@@ -10,15 +10,11 @@ class WooCommerce
 {
     /**
      * The shop currency.
-     *
-     * @var  string|null
      */
     private static ?string $currency = null;
 
     /**
      * Get the shop currency.
-     *
-     * @return  string|null
      */
     public static function currency(): ?string
     {

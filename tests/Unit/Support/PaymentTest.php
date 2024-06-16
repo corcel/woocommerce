@@ -24,8 +24,8 @@ class PaymentTest extends TestCase
     {
         $payment = $this->createPayment();
         $array = [
-            'method'         => 'test',
-            'method_title'   => 'Test',
+            'method' => 'test',
+            'method_title' => 'Test',
             'transaction_id' => 'tid-000',
         ];
 
@@ -64,9 +64,9 @@ class PaymentTest extends TestCase
         /** @var Order */
         $order = Order::factory()->create();
         $order->createMeta([
-            '_payment_method'       => 'test',
+            '_payment_method' => 'test',
             '_payment_method_title' => 'Test',
-            '_transaction_id'       => 'tid-000',
+            '_transaction_id' => 'tid-000',
         ]);
 
         return new Payment($order);

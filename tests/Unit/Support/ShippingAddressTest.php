@@ -14,26 +14,26 @@ class ShippingAddressTest extends TestCase
 {
     private const ORDER_META_FIELDS = [
         '_shipping_first_name' => 'John',
-        '_shipping_last_name'  => 'Doe',
-        '_shipping_company'    => 'ACME corp.',
-        '_shipping_address_1'  => 'Example Street 10',
-        '_shipping_address_2'  => 'Test Address',
-        '_shipping_city'       => 'Los Angeles',
-        '_shipping_state'      => 'California',
-        '_shipping_postcode'   => '00000',
-        '_shipping_country'    => 'USA',
+        '_shipping_last_name' => 'Doe',
+        '_shipping_company' => 'ACME corp.',
+        '_shipping_address_1' => 'Example Street 10',
+        '_shipping_address_2' => 'Test Address',
+        '_shipping_city' => 'Los Angeles',
+        '_shipping_state' => 'California',
+        '_shipping_postcode' => '00000',
+        '_shipping_country' => 'USA',
     ];
 
     private const CUSTOMER_META_FIELDS = [
         'shipping_first_name' => 'John',
-        'shipping_last_name'  => 'Doe',
-        'shipping_company'    => 'ACME corp.',
-        'shipping_address_1'  => 'Example Street 10',
-        'shipping_address_2'  => 'Test Address',
-        'shipping_city'       => 'Los Angeles',
-        'shipping_state'      => 'California',
-        'shipping_postcode'   => '00000',
-        'shipping_country'    => 'USA',
+        'shipping_last_name' => 'Doe',
+        'shipping_company' => 'ACME corp.',
+        'shipping_address_1' => 'Example Street 10',
+        'shipping_address_2' => 'Test Address',
+        'shipping_city' => 'Los Angeles',
+        'shipping_state' => 'California',
+        'shipping_postcode' => '00000',
+        'shipping_country' => 'USA',
     ];
 
     public function testOrderShippingAddressProperties(): void
@@ -72,14 +72,14 @@ class ShippingAddressTest extends TestCase
 
         $array = [
             'first_name' => 'John',
-            'last_name'  => 'Doe',
-            'company'    => 'ACME corp.',
-            'address_1'  => 'Example Street 10',
-            'address_2'  => 'Test Address',
-            'city'       => 'Los Angeles',
-            'state'      => 'California',
-            'postcode'   => '00000',
-            'country'    => 'USA',
+            'last_name' => 'Doe',
+            'company' => 'ACME corp.',
+            'address_1' => 'Example Street 10',
+            'address_2' => 'Test Address',
+            'city' => 'Los Angeles',
+            'state' => 'California',
+            'postcode' => '00000',
+            'country' => 'USA',
         ];
 
         $this->assertSame($array, $shippingAddress->toArray());
