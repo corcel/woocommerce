@@ -15,7 +15,7 @@ use Tests\TestCase;
 
 class OrderTest extends TestCase
 {
-    public function testCurrencyProperty(): void
+    public function test_currency_property(): void
     {
         $order = $this->createOrder();
         $order->createMeta('_order_currency', 'USD');
@@ -23,7 +23,7 @@ class OrderTest extends TestCase
         $this->assertSame('USD', $order->currency);
     }
 
-    public function testTotalProperty(): void
+    public function test_total_property(): void
     {
         $order = $this->createOrder();
         $order->createMeta('_order_total', '9.99');
@@ -31,7 +31,7 @@ class OrderTest extends TestCase
         $this->assertSame('9.99', $order->total);
     }
 
-    public function testShippingProperty(): void
+    public function test_shipping_property(): void
     {
         $order = $this->createOrder();
         $order->createMeta('_order_shipping', '8.88');
@@ -39,7 +39,7 @@ class OrderTest extends TestCase
         $this->assertSame('8.88', $order->shipping);
     }
 
-    public function testTaxProperty(): void
+    public function test_tax_property(): void
     {
         $order = $this->createOrder();
         $order->createMeta('_order_tax', '7.77');
@@ -47,7 +47,7 @@ class OrderTest extends TestCase
         $this->assertSame('7.77', $order->tax);
     }
 
-    public function testShippingTaxProperty(): void
+    public function test_shipping_tax_property(): void
     {
         $order = $this->createOrder();
         $order->createMeta('_order_shipping_tax', '6.66');
@@ -55,7 +55,7 @@ class OrderTest extends TestCase
         $this->assertSame('6.66', $order->shipping_tax);
     }
 
-    public function testStatusProperty(): void
+    public function test_status_property(): void
     {
         $order = $this->createOrder([
             'post_status' => 'wc-refunded',
@@ -64,7 +64,7 @@ class OrderTest extends TestCase
         $this->assertSame('refunded', $order->status);
     }
 
-    public function testDateCompletedProperty(): void
+    public function test_date_completed_property(): void
     {
         $order = $this->createOrder();
         $order->createMeta('_date_completed', 1577836800); // '2020-01-01 00:00:00'
@@ -73,7 +73,7 @@ class OrderTest extends TestCase
         $this->assertSame('2020-01-01 00:00:00', $order->date_completed->format('Y-m-d H:i:s'));
     }
 
-    public function testDatePaidProperty(): void
+    public function test_date_paid_property(): void
     {
         $order = $this->createOrder();
         $order->createMeta('_date_paid', 1577840400); // '2020-01-01 01:00:00'
@@ -82,7 +82,7 @@ class OrderTest extends TestCase
         $this->assertSame('2020-01-01 01:00:00', $order->date_paid->format('Y-m-d H:i:s'));
     }
 
-    public function testDeprecatedDateFormats(): void
+    public function test_deprecated_date_formats(): void
     {
         $order = $this->createOrder();
         $order->createMeta('_completed_date', '2020-01-01 00:00:00');
@@ -95,28 +95,28 @@ class OrderTest extends TestCase
         $this->assertSame('2020-01-01 01:00:00', $order->date_paid->format('Y-m-d H:i:s'));
     }
 
-    public function testPaymentProperty(): void
+    public function test_payment_property(): void
     {
         $order = $this->createOrder();
 
         $this->assertInstanceOf(Payment::class, $order->payment);
     }
 
-    public function testBillingAddressProperty(): void
+    public function test_billing_address_property(): void
     {
         $order = $this->createOrder();
 
         $this->assertInstanceOf(BillingAddress::class, $order->billing_address);
     }
 
-    public function testShippingAddressProperty(): void
+    public function test_shipping_address_property(): void
     {
         $order = $this->createOrder();
 
         $this->assertInstanceOf(ShippingAddress::class, $order->shipping_address);
     }
 
-    public function testArrayHasAppendedValues(): void
+    public function test_array_has_appended_values(): void
     {
         /** @var Order */
         $order = Order::factory()->create();
@@ -135,7 +135,7 @@ class OrderTest extends TestCase
         $this->assertArrayHasKey('shipping_address', $array);
     }
 
-    public function testRelatedCustomer(): void
+    public function test_related_customer(): void
     {
         /** @var Customer */
         $customer = Customer::factory()->create();
@@ -149,14 +149,14 @@ class OrderTest extends TestCase
         $this->assertTrue($orderCustomer->is($customer));
     }
 
-    public function testGuestOrder(): void
+    public function test_guest_order(): void
     {
         $order = $this->createOrder();
 
         $this->assertNull($order->customer);
     }
 
-    public function testRelatedItems(): void
+    public function test_related_items(): void
     {
         $order = $this->createOrder();
 
@@ -166,7 +166,7 @@ class OrderTest extends TestCase
     }
 
     /**
-     * @param  mixed[]  $attributes
+     * @param  array<string, mixed>  $attributes
      */
     private function createOrder(array $attributes = []): Order
     {

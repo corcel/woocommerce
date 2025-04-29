@@ -10,10 +10,10 @@ use Tests\TestCase;
 
 class ProductAttributeTest extends TestCase
 {
-    public function testTermsProperty(): void
+    public function test_terms_property(): void
     {
-        $productAttribute = new ProductAttribute();
-        $productAttribute->setTerms(new Collection());
+        $productAttribute = new ProductAttribute;
+        $productAttribute->setTerms(new Collection);
 
         $this->assertInstanceOf(Collection::class, $productAttribute->terms);
     }

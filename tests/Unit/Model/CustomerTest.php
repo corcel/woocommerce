@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class CustomerTest extends TestCase
 {
-    public function testOrderCountProperty(): void
+    public function test_order_count_property(): void
     {
         $customer = $this->createCustomer();
         $customer->createMeta([
@@ -20,14 +20,14 @@ class CustomerTest extends TestCase
         $this->assertSame(10, $customer->order_count);
     }
 
-    public function testArrayHasAppendedValues(): void
+    public function test_array_has_appended_values(): void
     {
         $customer = $this->createCustomer();
 
         $this->assertArrayHasKey('order_count', $customer->toArray());
     }
 
-    public function testRelatedOrders(): void
+    public function test_related_orders(): void
     {
         $customer = $this->createCustomer();
 

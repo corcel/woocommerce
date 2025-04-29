@@ -40,7 +40,7 @@ class BillingAddressTest extends TestCase
         'billing_phone' => '00-00-000-000',
     ];
 
-    public function testOrderBillingAddressProperties(): void
+    public function test_order_billing_address_properties(): void
     {
         $billingAddress = $this->createOrderBillingAddress();
 
@@ -57,7 +57,7 @@ class BillingAddressTest extends TestCase
         $this->assertSame('00-00-000-000', $billingAddress->phone);
     }
 
-    public function testCustomerBillingAddressProperties(): void
+    public function test_customer_billing_address_properties(): void
     {
         $billingAddress = $this->createCustomerBillingAddress();
 
@@ -74,7 +74,7 @@ class BillingAddressTest extends TestCase
         $this->assertSame('00-00-000-000', $billingAddress->phone);
     }
 
-    public function testToArrayMethod(): void
+    public function test_to_array_method(): void
     {
         $billingAddress = $this->createOrderBillingAddress();
 
@@ -95,7 +95,7 @@ class BillingAddressTest extends TestCase
         $this->assertSame($array, $billingAddress->toArray());
     }
 
-    public function testToJsonMethod(): void
+    public function test_to_json_method(): void
     {
         $billingAddress = $this->createOrderBillingAddress();
 
@@ -104,7 +104,7 @@ class BillingAddressTest extends TestCase
         $this->assertSame($json, $billingAddress->toJson());
     }
 
-    public function testInvalidProperty(): void
+    public function test_invalid_property(): void
     {
         $this->expectException(InvalidArgumentException::class);
 

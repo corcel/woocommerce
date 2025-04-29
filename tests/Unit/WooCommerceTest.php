@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class WooCommerceTest extends TestCase
 {
-    public function testShopCurrency(): void
+    public function test_shop_currency(): void
     {
         DB::table('options')->insert([
             'option_name' => 'woocommerce_currency',

@@ -10,7 +10,7 @@ use Tests\TestCase;
 
 class ProductTest extends TestCase
 {
-    public function testPriceProperty(): void
+    public function test_price_property(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_price', '9.99');
@@ -18,7 +18,7 @@ class ProductTest extends TestCase
         $this->assertSame('9.99', $product->price);
     }
 
-    public function testRegularPriceProperty(): void
+    public function test_regular_price_property(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_regular_price', '8.88');
@@ -26,7 +26,7 @@ class ProductTest extends TestCase
         $this->assertSame('8.88', $product->regular_price);
     }
 
-    public function testSalePriceProperty(): void
+    public function test_sale_price_property(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_sale_price', '7.77');
@@ -34,7 +34,7 @@ class ProductTest extends TestCase
         $this->assertSame('7.77', $product->sale_price);
     }
 
-    public function testOnSaleProperty(): void
+    public function test_on_sale_property(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_regular_price', '6.66');
@@ -48,7 +48,7 @@ class ProductTest extends TestCase
         $this->assertFalse($product->on_sale);
     }
 
-    public function testSkuProperty(): void
+    public function test_sku_property(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_sku', 'UNIQUE');
@@ -56,7 +56,7 @@ class ProductTest extends TestCase
         $this->assertSame('UNIQUE', $product->sku);
     }
 
-    public function testTaxStatusProperty(): void
+    public function test_tax_status_property(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_tax_status', 'taxable');
@@ -64,7 +64,7 @@ class ProductTest extends TestCase
         $this->assertSame('taxable', $product->tax_status);
     }
 
-    public function testIsTaxableProperty(): void
+    public function test_is_taxable_property(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_tax_status', 'taxable');
@@ -77,7 +77,7 @@ class ProductTest extends TestCase
         $this->assertFalse($product->is_taxable);
     }
 
-    public function testWeightProperty(): void
+    public function test_weight_property(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_weight', '3.33');
@@ -85,7 +85,7 @@ class ProductTest extends TestCase
         $this->assertSame('3.33', $product->weight);
     }
 
-    public function testLengthProperty(): void
+    public function test_length_property(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_length', '2.22');
@@ -93,7 +93,7 @@ class ProductTest extends TestCase
         $this->assertSame('2.22', $product->length);
     }
 
-    public function testWidthProperty(): void
+    public function test_width_property(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_width', '1.11');
@@ -101,7 +101,7 @@ class ProductTest extends TestCase
         $this->assertSame('1.11', $product->width);
     }
 
-    public function testHeightProperty(): void
+    public function test_height_property(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_height', '0.00');
@@ -109,7 +109,7 @@ class ProductTest extends TestCase
         $this->assertSame('0.00', $product->height);
     }
 
-    public function testIsVirtualProperty(): void
+    public function test_is_virtual_property(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_virtual', 'yes');
@@ -122,7 +122,7 @@ class ProductTest extends TestCase
         $this->assertFalse($product->is_virtual);
     }
 
-    public function testIsDownloadableProperty(): void
+    public function test_is_downloadable_property(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_downloadable', 'yes');
@@ -135,7 +135,7 @@ class ProductTest extends TestCase
         $this->assertFalse($product->is_downloadable);
     }
 
-    public function testStockProperty(): void
+    public function test_stock_property(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_stock', '5');
@@ -143,7 +143,7 @@ class ProductTest extends TestCase
         $this->assertSame('5', $product->stock);
     }
 
-    public function testInStockProperty(): void
+    public function test_in_stock_property(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_stock_status', 'instock');
@@ -156,7 +156,7 @@ class ProductTest extends TestCase
         $this->assertFalse($product->in_stock);
     }
 
-    public function testCrosssellsProperty(): void
+    public function test_crosssells_property(): void
     {
         /** @var \Illuminate\Database\Eloquent\Collection<int, Product> */
         $crosssellProducts = Product::factory()->count(2)->create();
@@ -169,7 +169,7 @@ class ProductTest extends TestCase
         $this->assertTrue($product->crosssells->first()->is($crosssellProducts->first()));
     }
 
-    public function testEmptyCrosssells(): void
+    public function test_empty_crosssells(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_crosssell_ids', serialize([]));
@@ -177,7 +177,7 @@ class ProductTest extends TestCase
         $this->assertSame(0, $product->crosssells->count());
     }
 
-    public function testUpsellsProperty(): void
+    public function test_upsells_property(): void
     {
         /** @var \Illuminate\Database\Eloquent\Collection<int, Product> */
         $upsellProducts = Product::factory()->count(3)->create();
@@ -190,7 +190,7 @@ class ProductTest extends TestCase
         $this->assertTrue($product->upsells->first()->is($upsellProducts->first()));
     }
 
-    public function testEmptyUpsells(): void
+    public function test_empty_upsells(): void
     {
         $product = $this->createProduct();
         $product->createMeta('_upsell_ids', serialize([]));
@@ -198,7 +198,7 @@ class ProductTest extends TestCase
         $this->assertSame(0, $product->upsells->count());
     }
 
-    public function testRelatedItems(): void
+    public function test_related_items(): void
     {
         $product = $this->createProduct();
 

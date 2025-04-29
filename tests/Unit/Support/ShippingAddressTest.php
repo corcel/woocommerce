@@ -36,7 +36,7 @@ class ShippingAddressTest extends TestCase
         'shipping_country' => 'USA',
     ];
 
-    public function testOrderShippingAddressProperties(): void
+    public function test_order_shipping_address_properties(): void
     {
         $shippingAddress = $this->createOrderShippingAddress();
 
@@ -51,7 +51,7 @@ class ShippingAddressTest extends TestCase
         $this->assertSame('USA', $shippingAddress->country);
     }
 
-    public function testCustomerShippingAddressProperties(): void
+    public function test_customer_shipping_address_properties(): void
     {
         $shippingAddress = $this->createCustomerShippingAddress();
 
@@ -66,7 +66,7 @@ class ShippingAddressTest extends TestCase
         $this->assertSame('USA', $shippingAddress->country);
     }
 
-    public function testToArrayMethod(): void
+    public function test_to_array_method(): void
     {
         $shippingAddress = $this->createOrderShippingAddress();
 
@@ -85,7 +85,7 @@ class ShippingAddressTest extends TestCase
         $this->assertSame($array, $shippingAddress->toArray());
     }
 
-    public function testToJsonMethod(): void
+    public function test_to_json_method(): void
     {
         $shippingAddress = $this->createOrderShippingAddress();
 
@@ -94,7 +94,7 @@ class ShippingAddressTest extends TestCase
         $this->assertSame($json, $shippingAddress->toJson());
     }
 
-    public function testInvalidProperty(): void
+    public function test_invalid_property(): void
     {
         $this->expectException(InvalidArgumentException::class);
 

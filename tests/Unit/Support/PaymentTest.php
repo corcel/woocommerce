@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class PaymentTest extends TestCase
 {
-    public function testProperties(): void
+    public function test_properties(): void
     {
         $payment = $this->createPayment();
 
@@ -20,7 +20,7 @@ class PaymentTest extends TestCase
         $this->assertSame('tid-000', $payment->transaction_id);
     }
 
-    public function testToArrayMethod(): void
+    public function test_to_array_method(): void
     {
         $payment = $this->createPayment();
         $array = [
@@ -32,7 +32,7 @@ class PaymentTest extends TestCase
         $this->assertSame($array, $payment->toArray());
     }
 
-    public function testToJsonMethod(): void
+    public function test_to_json_method(): void
     {
         $payment = $this->createPayment();
         $json = '{"method":"test","method_title":"Test","transaction_id":"tid-000"}';
@@ -40,7 +40,7 @@ class PaymentTest extends TestCase
         $this->assertSame($json, $payment->toJson());
     }
 
-    public function testInvalidJson(): void
+    public function test_invalid_json(): void
     {
         $this->expectException(InvalidArgumentException::class);
 

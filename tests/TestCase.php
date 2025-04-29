@@ -11,7 +11,7 @@ class TestCase extends BaseTestCase
     /**
      * {@inheritDoc}
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class AddressTest extends TestCase
 {
-    public function testInvalidModel(): void
+    public function test_invalid_model(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -22,7 +22,7 @@ class AddressTest extends TestCase
         new Address($model, 'billing');
     }
 
-    public function testInvalidJson(): void
+    public function test_invalid_json(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
