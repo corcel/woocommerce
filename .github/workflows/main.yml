@@ -13,6 +13,7 @@ jobs:
         php-version:
           - "8.2"
           - "8.3"
+          - "8.4"
         operating-system:
           - ubuntu-latest
           - windows-latest
@@ -24,7 +25,7 @@ jobs:
     steps:
 
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -37,7 +38,7 @@ jobs:
       run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
     - name: Cache dependencies
-      uses: actions/cache@v2
+      uses: actions/cache@v4
       with:
         path: ${{ steps.composercache.outputs.dir }}
         key: php-${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
