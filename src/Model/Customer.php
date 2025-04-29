@@ -13,16 +13,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property int $order_count
- * @property Collection $orders
+ * @property \Illuminate\Database\Eloquent\Collection<int, Order> $orders
  */
 class Customer extends User
 {
     use AddressesTrait;
+
+    /** @use HasFactory<CustomerFactory> */
     use HasFactory;
 
-    /**
-     * @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model>
-     */
+    /** @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model, $this> */
     use HasRelationsThroughMeta;
 
     /**
@@ -57,7 +57,7 @@ class Customer extends User
     /**
      * Get the related orders.
      *
-     * @return HasMany<\Illuminate\Database\Eloquent\Model>
+     * @return HasMany<\Illuminate\Database\Eloquent\Model, $this>
      */
     public function orders(): HasMany
     {

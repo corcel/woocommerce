@@ -35,7 +35,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Item extends Model
 {
     use Aliases;
+
+    /** @use HasFactory<ItemFactory> */
     use HasFactory;
+
     use MetaFields;
 
     /**
@@ -54,7 +57,7 @@ class Item extends Model
     /**
      * {@inheritDoc}
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $appends = [
         'quantity',
@@ -159,7 +162,7 @@ class Item extends Model
     /**
      * {@inheritDoc}
      *
-     * @return HasMany<ItemMeta>
+     * @return HasMany<ItemMeta, $this>
      */
     public function meta(): HasMany
     {
@@ -169,7 +172,7 @@ class Item extends Model
     /**
      * Get the related order.
      *
-     * @return BelongsTo<Order, Item>
+     * @return BelongsTo<Order, $this>
      */
     public function order(): BelongsTo
     {
@@ -179,7 +182,7 @@ class Item extends Model
     /**
      * Get the related product.
      *
-     * @return BelongsTo<Product, Item>
+     * @return BelongsTo<Product, $this>
      */
     public function product(): BelongsTo
     {

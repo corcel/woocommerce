@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
+ * @property string $post_status
  * @property int|null $customer_id
  * @property string|null $currency
  * @property string|null $total
@@ -29,13 +30,16 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property Carbon|null $date_paid
  * @property Payment $payment
  * @property Customer|null $customer
- * @property Collection $items
+ * @property Collection<int, Item> $items
  */
 class Order extends Post
 {
     use AddressesTrait;
     use Aliases;
+
+    /** @use HasFactory<OrderFactory> */
     use HasFactory;
+
     use MetaFields;
 
     /**
@@ -144,7 +148,7 @@ class Order extends Post
      */
     public function getStatusAttribute(): string
     {
-        $status = $this->post_status; // @phpstan-ignore-line
+        $status = $this->post_status;
 
         return substr($status, 0, 3) === 'wc-' ? substr($status, 3) : $status;
     }
@@ -204,7 +208,7 @@ class Order extends Post
     /**
      * Get the related customer.
      *
-     * @return BelongsTo<Customer, Order>
+     * @return BelongsTo<Customer, $this>
      */
     public function customer(): BelongsTo
     {
@@ -214,7 +218,7 @@ class Order extends Post
     /**
      * Get related items.
      *
-     * @return HasMany<Item>
+     * @return HasMany<Item, $this>
      */
     public function items(): HasMany
     {

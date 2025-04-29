@@ -15,13 +15,15 @@ use LogicException;
 
 /**
  * @template TRelatedModel of Model
+ * @template TDeclaringModel of Model
  */
 trait HasRelationsThroughMeta
 {
     /**
      * Define a one-to-many relation through meta.
      *
-     * @return HasMany<TRelatedModel>
+     * @param  class-string<Model>  $related
+     * @return HasMany<TRelatedModel, TDeclaringModel>
      *
      * @throws InvalidArgumentException
      * @throws LogicException
@@ -47,7 +49,6 @@ trait HasRelationsThroughMeta
     /**
      * Make meta model instance.
      *
-     *
      * @throws InvalidArgumentException
      * @throws LogicException
      */
@@ -61,7 +62,9 @@ trait HasRelationsThroughMeta
             ));
         }
 
-        $meta = $model->meta()->getRelated();
+        /** @var \Illuminate\Database\Eloquent\Relations\HasMany<Model, Model> */
+        $relation = $model->meta();
+        $meta = $relation->getRelated();
 
         if (! $meta instanceof Meta) {
             throw new InvalidArgumentException(sprintf(

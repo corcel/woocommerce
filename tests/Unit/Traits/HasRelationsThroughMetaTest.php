@@ -13,19 +13,17 @@ use Tests\TestCase;
 
 class HasRelationsThroughMetaTest extends TestCase
 {
-    public function testInvalidModel(): void
+    public function test_invalid_model(): void
     {
         $this->expectException(LogicException::class);
 
-        $model = new class() extends Model
+        $model = new class extends Model
         {
-            /**
-             * @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model>
-             */
+            /** @use HasRelationsThroughMeta<Model, Model> */
             use HasRelationsThroughMeta;
 
             /**
-             * @return HasMany<\Illuminate\Database\Eloquent\Model>
+             * @return HasMany<Model, Model>
              */
             public function relatedObjects(): HasMany
             {
@@ -36,15 +34,13 @@ class HasRelationsThroughMetaTest extends TestCase
         $model->relatedObjects; // @phpstan-ignore-line
     }
 
-    public function testInvalidMeta(): void
+    public function test_invalid_meta(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
-        $model = new class() extends Model
+        $model = new class extends Model
         {
-            /**
-             * @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model>
-             */
+            /** @use HasRelationsThroughMeta<Model, Model> */
             use HasRelationsThroughMeta;
 
             /** @var \Corcel\Model */
@@ -56,7 +52,7 @@ class HasRelationsThroughMetaTest extends TestCase
             }
 
             /**
-             * @return HasMany<\Illuminate\Database\Eloquent\Model>
+             * @return HasMany<Model, Model>
              */
             public function relatedObjects(): HasMany
             {
@@ -64,10 +60,10 @@ class HasRelationsThroughMetaTest extends TestCase
             }
         };
 
-        $model->setRelatedModel(new class() extends Model
+        $model->setRelatedModel(new class extends Model
         {
             /**
-             * @return HasMany<\Corcel\Model>
+             * @return HasMany<\Corcel\Model, Model>
              */
             public function meta(): HasMany
             {

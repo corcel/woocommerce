@@ -34,22 +34,23 @@ use Illuminate\Support\Str;
  * @property string|null $stock
  * @property bool $in_stock
  * @property string|null $type
- * @property BaseCollection $attributes
- * @property Collection<Product> $crosssells
- * @property Collection $upsells
- * @property BaseCollection $gallery
- * @property Collection $categories
- * @property Collection $items
- * @property Collection<ProductType> $productTypes
- * @property Collection $tags
+ * @property BaseCollection<string, ProductAttribute> $attributes
+ * @property Collection<int, Product> $crosssells
+ * @property Collection<int, Product> $upsells
+ * @property BaseCollection<int, Attachment> $gallery
+ * @property Collection<int, ProductCategory> $categories
+ * @property Collection<int, Item> $items
+ * @property Collection<int, ProductType> $productTypes
+ * @property Collection<int, ProductTag> $tags
  */
 class Product extends Post
 {
     use Aliases;
+
+    /** @use HasFactory<ProductFactory> */
     use HasFactory;
-    /**
-     * @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model>
-     */
+
+    /** @use HasRelationsThroughMeta<\Illuminate\Database\Eloquent\Model, $this> */
     use HasRelationsThroughMeta;
 
     use MetaFields;
@@ -261,7 +262,9 @@ class Product extends Post
 
         return $taxonomies
             ->filter(function ($taxonomy) {
-                return $taxonomy->taxonomy !== null && Str::startsWith($taxonomy->taxonomy, 'pa_');
+                return isset($taxonomy->taxonomy)
+                    && is_string($taxonomy->taxonomy)
+                    && Str::startsWith($taxonomy->taxonomy, 'pa_');
             })
             ->groupBy('taxonomy')
             ->map(function ($taxonomy, $taxonomyName) {
@@ -328,10 +331,10 @@ class Product extends Post
      */
     public function getGalleryAttribute(): BaseCollection
     {
-        $gallery = new BaseCollection();
+        $gallery = new BaseCollection;
 
-        if ($thumbnail = $this->thumbnail) {
-            $gallery->push($thumbnail->attachment);
+        if (isset($this->thumbnail->attachment) && $this->thumbnail->attachment instanceof Attachment) {
+            $gallery->push($this->thumbnail->attachment);
         }
 
         $attachmentsId = $this->getMeta('_product_image_gallery');
@@ -360,7 +363,7 @@ class Product extends Post
     /**
      * Get the related categories.
      *
-     * @return BelongsToMany<ProductCategory>
+     * @return BelongsToMany<ProductCategory, $this>
      */
     public function categories(): BelongsToMany
     {
@@ -375,7 +378,7 @@ class Product extends Post
     /**
      * Get the related items.
      *
-     * @return HasMany<\Illuminate\Database\Eloquent\Model>
+     * @return HasMany<\Illuminate\Database\Eloquent\Model, $this>
      */
     public function items(): HasMany
     {
@@ -390,7 +393,7 @@ class Product extends Post
     /**
      * Get the related product types.
      *
-     * @return BelongsToMany<ProductType>
+     * @return BelongsToMany<ProductType, $this>
      */
     public function productTypes(): BelongsToMany
     {
@@ -405,7 +408,7 @@ class Product extends Post
     /**
      * Get the related tags.
      *
-     * @return BelongsToMany<ProductTag>
+     * @return BelongsToMany<ProductTag, $this>
      */
     public function tags(): BelongsToMany
     {
