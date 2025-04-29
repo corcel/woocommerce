@@ -26,8 +26,9 @@ Some meta values are collected into helper classes:
 
 | Corcel WooCommerce                                    | Laravel        | PHP version   | Supported          |
 | ----------------------------------------------------- | -------------- | ------------- | ------------------ |
-| 5.x (master)                                          | 10.x, 11.x     | >= 8.2        | :white_check_mark: |
-| [4.x](https://github.com/corcel/woocommerce/tree/4.x) | 10.x           | >= 8.1        | :white_check_mark: |
+| 6.x (master)                                          | 11.x, 12.x     | >= 8.2        | :white_check_mark: |
+| [5.x](https://github.com/corcel/woocommerce/tree/5.x) | 10.x, 11.x     | >= 8.2        | :white_check_mark: |
+| [4.x](https://github.com/corcel/woocommerce/tree/4.x) | 10.x           | >= 8.1        | :x:                |
 | [3.x](https://github.com/corcel/woocommerce/tree/3.x) | 9.x            | >= 8.0.3      | :x:                |
 | [2.x](https://github.com/corcel/woocommerce/tree/2.x) | 6.x, 7.x, 8.x  | >= 7.3 \| 8.0 | :x:                |
 | [1.x](https://github.com/corcel/woocommerce/tree/1.x) | 6.x, 7.x       | >= 7.2        | :x:                |
