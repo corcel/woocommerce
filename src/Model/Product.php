@@ -419,4 +419,19 @@ class Product extends Post
             'term_taxonomy_id'
         );
     }
+
+    /**
+     * Get the related vendors.
+     *
+     * @return BelongsToMany<Vendor>
+     */
+    public function vendor()
+    {
+        return $this->belongsToMany(
+            Vendor::class,
+            'term_relationships',
+            'object_id',
+            'term_taxonomy_id'
+        );
+    }
 }
